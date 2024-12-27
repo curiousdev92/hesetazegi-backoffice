@@ -1,3 +1,5 @@
+import PageTransition from "../../animations/PageTransition";
+
 export default function HomePage() {
-  return <p>Home Page</p>;
+  return <PageTransition>This is the Home page.</PageTransition>;
 }

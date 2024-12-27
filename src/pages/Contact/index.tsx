@@ -1,3 +1,5 @@
+import PageTransition from "../../animations/PageTransition";
+
 export default function ContactPage() {
-  return <p>Contact Page</p>;
+  return <PageTransition>This is the Contact page.</PageTransition>;
 }
