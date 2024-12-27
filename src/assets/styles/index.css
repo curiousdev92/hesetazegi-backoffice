@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "IranYekan";
+  src: url("/src/assets/fonts/IRANYekanXVF.woff2");
+}
+
+body {
+  font-family: IranYekan;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  display: grid;
+}
+
+a.active {
+  color: dodgerblue;
+}
