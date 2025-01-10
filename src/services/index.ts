@@ -18,14 +18,18 @@ const fetchWithAbort = async <T>(
 
   try {
     const response = await fetch(url, fetchOptions);
-    if (!response.ok) {
-      throw new Error(`Request failed with status: ${response.status}`);
-    }
     const parsed = await response.json();
     if (parsed?.statusCode === 200) {
       return parsed.data;
     } else {
-      throw new Error(`Request failed with status: ${response.status}`);
+      /**
+       * @todo create Error dictionary and use it here
+       */
+      throw new Error(
+        `${parsed?.statusMessage || "Request Failed with Status:"} ${
+          parsed.statusCode || response.status
+        }`
+      );
     }
   } catch (error: any) {
     if (error.name === "AbortError") {
@@ -37,14 +41,15 @@ const fetchWithAbort = async <T>(
 
 const GET = async <T>(
   url: string,
-  controller?: AbortController
+  controller?: AbortController,
+  unAuth?: boolean
 ): Promise<T> => {
   return fetchWithAbort(
     url,
     {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        ...(unAuth ? null : { Authorization: `Bearer ${token}` }),
       },
     },
     controller
@@ -54,7 +59,8 @@ const GET = async <T>(
 const POST = async <T>(
   url: string,
   body: any,
-  controller?: AbortController
+  controller?: AbortController,
+  unAuth?: boolean
 ): Promise<T> => {
   return fetchWithAbort(
     url,
@@ -62,7 +68,7 @@ const POST = async <T>(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        ...(unAuth ? null : { Authorization: `Bearer ${token}` }),
       },
       body: JSON.stringify(body),
     },
