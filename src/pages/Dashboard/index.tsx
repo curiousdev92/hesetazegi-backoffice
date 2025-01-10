@@ -1,4 +1,3 @@
-import PageTransition from "@src/animations/PageTransition";
 import { FC } from "react";
 
 type PropTypes = {};
@@ -6,6 +5,6 @@ type PropTypes = {};
 const DashboardPage: FC<PropTypes> = (props) => {
   const {} = props;
 
-  return <PageTransition>DashboardPage</PageTransition>;
+  return <div>DashboardPage</div>;
 };
 export default DashboardPage;

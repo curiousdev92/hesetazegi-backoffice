@@ -42,7 +42,8 @@ const fetchWithAbort = async <T>(
 const GET = async <T>(
   url: string,
   controller?: AbortController,
-  unAuth?: boolean
+  unAuth?: boolean,
+  cache?: RequestInit["cache"]
 ): Promise<T> => {
   return fetchWithAbort(
     url,
@@ -51,6 +52,7 @@ const GET = async <T>(
         "Content-Type": "application/json",
         ...(unAuth ? null : { Authorization: `Bearer ${token}` }),
       },
+      cache,
     },
     controller
   );

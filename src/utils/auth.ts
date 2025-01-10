@@ -4,8 +4,8 @@ import { getCookie } from "./cookies";
 const token = getCookie("bo-tkn");
 
 const isTokenValid = (token: string) => {
-  const decoded = jwtDecode<JwtPayload>(token);
   try {
+    const decoded = jwtDecode<JwtPayload>(token);
     const currentTime = Date.now() / 1000; // Convert to seconds
     return decoded.exp && decoded.exp > currentTime; // Check if token is expired
   } catch (error) {

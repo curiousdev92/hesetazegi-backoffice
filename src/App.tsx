@@ -1,23 +1,10 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router";
-import MainLayout from "./layouts/Main";
-import DashboardPage from "./pages/Dashboard";
-import LoginPage from "./pages/Login";
-import ProtectRoutes from "./routes/protect-routes";
+import { BrowserRouter } from "react-router";
+import DynamicNavigation from "./routes/navigations";
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route element={<ProtectRoutes />}>
-          <Route element={<MainLayout />}>
-            <Route index element={<Navigate to="/dashboard" />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
-          </Route>
-        </Route>
-
-        {/* Non auth Pages */}
-        <Route path="login" element={<LoginPage />} />
-      </Routes>
+      <DynamicNavigation />
     </BrowserRouter>
   );
 }

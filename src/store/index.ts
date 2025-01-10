@@ -1,11 +1,6 @@
 import { create } from "zustand";
-import createBearSlice from "./bearSlice";
+import createMenuSlice from "./menuSlice";
 
-interface BearSlice {
-  bears: number;
-  addBear: () => void;
-}
-
-export const useStore = create<BearSlice>()((...a) => ({
-  ...createBearSlice(...a),
+export const useStore = create<MenuSlice>()((...a) => ({
+  ...createMenuSlice(...a),
 }));

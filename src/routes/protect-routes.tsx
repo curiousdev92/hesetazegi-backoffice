@@ -1,10 +1,9 @@
-import { getCookie } from "@src/utils/cookies";
+import isAuth from "@src/utils/auth";
 import { FC } from "react";
 import { Navigate, Outlet } from "react-router";
 
 const ProtectRoutes: FC = () => {
-  const token = getCookie("bo-tkn");
-  return token ? <Outlet /> : <Navigate to={"/login"} />;
+  return isAuth ? <Outlet /> : <Navigate to={"/login"} />;
 };
 
 export default ProtectRoutes;
