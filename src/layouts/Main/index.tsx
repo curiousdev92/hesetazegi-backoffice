@@ -1,22 +1,14 @@
-import { NavLink, Outlet } from "react-router";
+import { Outlet } from "react-router";
+import SideMenu from "../SideMenu";
 
 export default function MainLayout() {
   return (
-    <div className="flex h-full">
-      <aside className="bg-gray-300 p-4 basis-[20%]">
-        <ul>
-          <li>
-            <NavLink to={"/"}>Home</NavLink>
-          </li>
-          <li>
-            <NavLink to={"/contact"}>Contact</NavLink>
-          </li>
-        </ul>
-      </aside>
+    <div className="flex h-full" style={{ direction: "rtl" }}>
+      <SideMenu />
 
-      <div className="grow p-4">
+      <main className="grow p-4">
         <Outlet />
-      </div>
+      </main>
     </div>
   );
 }

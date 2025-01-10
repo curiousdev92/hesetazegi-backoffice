@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@vitejs/plugin-basic-ssl':
+        specifier: ^1.2.0
+        version: 1.2.0(vite@6.0.5(jiti@1.21.7)(yaml@2.6.1))
+      jwt-decode:
+        specifier: ^4.0.0
+        version: 4.0.0
       motion:
         specifier: ^11.15.0
         version: 11.15.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -20,6 +26,9 @@ importers:
       react-router:
         specifier: ^7.1.1
         version: 7.1.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      ua-parser-js:
+        specifier: ^2.0.0
+        version: 2.0.0
       zustand:
         specifier: ^5.0.2
         version: 5.0.2(@types/react@19.0.2)(react@19.0.0)
@@ -543,6 +552,12 @@ packages:
     resolution: {integrity: sha512-zORcwn4C3trOWiCqFQP1x6G3xTRyZ1LYydnj51cRnJ6hxBlr/cKPckk+PKPUw/fXmvfKTcw7bwY3w9izgx5jZw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
+  '@vitejs/plugin-basic-ssl@1.2.0':
+    resolution: {integrity: sha512-mkQnxTkcldAzIsomk1UuLfAu9n+kpQ3JbHcpCp7d2Oo6ITtji8pHS3QToOWjhPFvNQSnhlkAjmGbhv2QvwO/7Q==}
+    engines: {node: '>=14.21.3'}
+    peerDependencies:
+      vite: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0
+
   '@vitejs/plugin-react-swc@3.7.2':
     resolution: {integrity: sha512-y0byko2b2tSVVf5Gpng1eEhX1OvPC7x8yns1Fx8jDzlJp4LS6CMkCPfLw47cjyoMrshQDoQw4qcgjsU9VvlCew==}
     peerDependencies:
@@ -679,6 +694,9 @@ packages:
 
   deep-is@0.1.4:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
+
+  detect-europe-js@0.1.2:
+    resolution: {integrity: sha512-lgdERlL3u0aUdHocoouzT10d9I89VVhk0qNRmll7mXdGfJT1/wqZ2ZLA4oJAjeACPY5fT1wsbq2AT+GkuInsow==}
 
   didyoumean@1.2.2:
     resolution: {integrity: sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==}
@@ -895,6 +913,9 @@ packages:
     resolution: {integrity: sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==}
     engines: {node: '>=0.12.0'}
 
+  is-standalone-pwa@0.1.1:
+    resolution: {integrity: sha512-9Cbovsa52vNQCjdXOzeQq5CnCbAcRk05aU62K20WO372NrTv0NxibLFCK6lQ4/iZEFdEA3p3t2VNOn8AJ53F5g==}
+
   isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
@@ -917,6 +938,10 @@ packages:
 
   json-stable-stringify-without-jsonify@1.0.1:
     resolution: {integrity: sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==}
+
+  jwt-decode@4.0.0:
+    resolution: {integrity: sha512-+KJGIyHgkGuIq3IEBNftfhW/LfWhXUIY6OmyVWjliu5KH1y0fw7VQ8YndE2O4qZdMSd9SqbnC8GOcZEy0Om7sA==}
+    engines: {node: '>=18'}
 
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
@@ -1267,6 +1292,13 @@ packages:
   typescript@5.7.2:
     resolution: {integrity: sha512-i5t66RHxDvVN40HfDd1PsEThGNnlMCMT3jMUuoh9/0TaqWevNontacunWyN02LA9/fIbEWlcHZcgTKb9QoaLfg==}
     engines: {node: '>=14.17'}
+    hasBin: true
+
+  ua-is-frozen@0.1.2:
+    resolution: {integrity: sha512-RwKDW2p3iyWn4UbaxpP2+VxwqXh0jpvdxsYpZ5j/MLLiQOfbsV5shpgQiw93+KMYQPcteeMQ289MaAFzs3G9pw==}
+
+  ua-parser-js@2.0.0:
+    resolution: {integrity: sha512-SASgD4RlB7+SCMmlVNqrhPw0f/2pGawWBzJ2+LwGTD0GgNnrKGzPJDiraGHJDwW9Zm5DH2lTmUpqDpbZjJY4+Q==}
     hasBin: true
 
   update-browserslist-db@1.1.1:
@@ -1736,6 +1768,10 @@ snapshots:
       '@typescript-eslint/types': 8.18.2
       eslint-visitor-keys: 4.2.0
 
+  '@vitejs/plugin-basic-ssl@1.2.0(vite@6.0.5(jiti@1.21.7)(yaml@2.6.1))':
+    dependencies:
+      vite: 6.0.5(jiti@1.21.7)(yaml@2.6.1)
+
   '@vitejs/plugin-react-swc@3.7.2(vite@6.0.5(jiti@1.21.7)(yaml@2.6.1))':
     dependencies:
       '@swc/core': 1.10.1
@@ -1861,6 +1897,8 @@ snapshots:
       ms: 2.1.3
 
   deep-is@0.1.4: {}
+
+  detect-europe-js@0.1.2: {}
 
   didyoumean@1.2.2: {}
 
@@ -2096,6 +2134,8 @@ snapshots:
 
   is-number@7.0.0: {}
 
+  is-standalone-pwa@0.1.1: {}
+
   isexe@2.0.0: {}
 
   jackspeak@3.4.3:
@@ -2115,6 +2155,8 @@ snapshots:
   json-schema-traverse@0.4.1: {}
 
   json-stable-stringify-without-jsonify@1.0.1: {}
+
+  jwt-decode@4.0.0: {}
 
   keyv@4.5.4:
     dependencies:
@@ -2455,6 +2497,14 @@ snapshots:
       - supports-color
 
   typescript@5.7.2: {}
+
+  ua-is-frozen@0.1.2: {}
+
+  ua-parser-js@2.0.0:
+    dependencies:
+      detect-europe-js: 0.1.2
+      is-standalone-pwa: 0.1.1
+      ua-is-frozen: 0.1.2
 
   update-browserslist-db@1.1.1(browserslist@4.24.3):
     dependencies:
