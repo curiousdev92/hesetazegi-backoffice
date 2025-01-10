@@ -1,4 +1,4 @@
-import { getCookie } from "../utils/cookies";
+import { getCookie } from "@src/utils/cookies";
 
 const token = getCookie("bo-tkn");
 
