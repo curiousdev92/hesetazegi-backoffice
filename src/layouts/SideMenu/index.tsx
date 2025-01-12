@@ -49,8 +49,9 @@ const SideMenu: FC<PropTypes> = (props) => {
             </li>
           </NavLink>
         ))}
+
         {/* Layer Blur */}
-        <div className="bg-[#c7b0001a] absolute w-64 h-64 bottom-0 rounded-full left-1/2 translate-y-1/2 -translate-x-1/2 blur-[100px]"></div>
+        <div className="bg-[rgba(199,176,0,0.3)] absolute w-64 h-64 bottom-0 rounded-full left-1/2 translate-y-1/2 -translate-x-1/2 blur-[100px]"></div>
       </ul>
 
       {/* Footer */}
