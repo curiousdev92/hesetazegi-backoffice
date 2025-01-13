@@ -1,7 +1,13 @@
-import { Outlet } from "react-router";
+import { useStore } from "@src/store";
+import { Outlet, useLoaderData } from "react-router";
 import SideMenu from "../SideMenu";
 
 export default function MainLayout() {
+  const data = useLoaderData();
+  const setMenu = useStore((st) => st.setMenu);
+
+  setMenu(data);
+
   return (
     <div className="flex h-full" style={{ direction: "rtl" }}>
       <SideMenu />

@@ -2,7 +2,7 @@ import { getCookie } from "@src/utils/cookies";
 
 const token = getCookie("bo-tkn");
 
-const fetchWithAbort = async <T>(
+export const fetchWithAbort = async <T>(
   url: string,
   options?: RequestInit,
   controller?: AbortController
@@ -41,9 +41,9 @@ const fetchWithAbort = async <T>(
 
 const GET = async <T>(
   url: string,
+  cache?: RequestInit["cache"],
   controller?: AbortController,
-  unAuth?: boolean,
-  cache?: RequestInit["cache"]
+  unAuth?: boolean
 ): Promise<T> => {
   return fetchWithAbort(
     url,
@@ -52,7 +52,7 @@ const GET = async <T>(
         "Content-Type": "application/json",
         ...(unAuth ? null : { Authorization: `Bearer ${token}` }),
       },
-      cache,
+      cache: cache || "force-cache",
     },
     controller
   );
