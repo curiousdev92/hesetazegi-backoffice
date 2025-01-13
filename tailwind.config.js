@@ -2,29 +2,25 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      boxShadow: {
+        modal: "0 0 1rem #00000040",
+      },
+    },
     colors: {
       system: {
         black: "#000000",
         white: "#FFFFFF",
-        black30: "#0000004D",
         black80: "#000000CC",
-        white30: "#FFFFFF4D",
         primary: "#298432",
         secondary: "#FB7F05",
         success: "#07856F",
         warning: "#FF832B",
-        warning30: "#FF832B4D",
         danger: "#F22323",
-        danger30: "#F223234D",
         information: "#7828C8",
-        information30: "#7828C84D",
         blue: "#1E6CFF",
-        blue30: "#1E6CFF4D",
         mint: "#00C7BE",
-        mint30: "#00C7BE4D",
         pink: "#FF2D55",
-        pink30: "#FF2D554D",
         yellow: "#FFF500",
       },
       primary: {
