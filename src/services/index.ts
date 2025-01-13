@@ -2,7 +2,7 @@ import { getCookie } from "@src/utils/cookies";
 
 const token = getCookie("bo-tkn");
 
-export const fetchWithAbort = async <T>(
+const fetchWithAbort = async <T>(
   url: string,
   options?: RequestInit,
   controller?: AbortController
