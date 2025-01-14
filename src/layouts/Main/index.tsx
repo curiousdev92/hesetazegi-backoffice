@@ -10,15 +10,16 @@ export default function MainLayout() {
   setMenu(data);
 
   return (
-    <div className="flex h-full" style={{ direction: "rtl" }}>
+    <div
+      className="grid grid-cols-[auto_1fr] h-full"
+      style={{ direction: "rtl" }}
+    >
       <SideMenu />
 
-      <main className="grow max-h-full overflow-hidden grid grid-rows-[5rem_1fr]">
+      <main className="grow max-h-full overflow-hidden grid grid-rows-[5rem_1fr] bg-content-secondary">
         <HeaderLayout />
-        <div className="p-4 bg-content-secondary grid">
-          <div className="bg-content-primary border border-border-secondary rounded-2xl overflow-hidden">
-            <Outlet />
-          </div>
+        <div className="bg-content-primary border border-border-secondary rounded-2xl overflow-hidden m-4">
+          <Outlet />
         </div>
       </main>
     </div>

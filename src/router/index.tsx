@@ -1,4 +1,3 @@
-import PageTransition from "@src/animations/PageTransition";
 import ErrorLayout from "@src/layouts/Error";
 import HydrateFallbackLayout from "@src/layouts/HydrateFallback";
 import MainLayout from "@src/layouts/Main";
@@ -23,30 +22,9 @@ const router = createBrowserRouter([
         loader: getMenu,
         children: [
           { index: true, element: <Navigate to="/dashboard" /> },
-          {
-            path: "/dashboard",
-            element: (
-              <PageTransition key={"dashboard"}>
-                <DashboardPage />
-              </PageTransition>
-            ),
-          },
-          {
-            path: "/recipes",
-            element: (
-              <PageTransition key={"recipes"}>
-                <RecipesPage />
-              </PageTransition>
-            ),
-          },
-          {
-            path: "/qa",
-            element: (
-              <PageTransition key={"qa"}>
-                <QAPage />
-              </PageTransition>
-            ),
-          },
+          { path: "/dashboard", element: <DashboardPage /> },
+          { path: "/recipes", element: <RecipesPage /> },
+          { path: "/qa", element: <QAPage /> },
         ],
       },
     ],

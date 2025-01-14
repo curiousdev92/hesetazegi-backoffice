@@ -6,6 +6,48 @@ export default {
       boxShadow: {
         modal: "0 0 1rem #00000040",
       },
+      fontSize: {
+        //////////////  typography  design system /////////////
+        "display-xl": [
+          "2.75rem",
+          { lineHeight: "3.625rem", fontWeight: "700" },
+        ],
+        "display-lg": ["2.5rem", { lineHeight: "3.25rem", fontWeight: "700" }],
+        "display-md": [
+          "2.25rem",
+          { lineHeight: "2.875rem", fontWeight: "700" },
+        ],
+        "display-sm": ["2rem", { lineHeight: "2.5rem", fontWeight: "700" }],
+
+        "headline-1": [
+          "2.75rem",
+          { lineHeight: "3.625rem", fontWeight: "500" },
+        ],
+        "headline-2": [
+          "2.25rem",
+          { lineHeight: "2.875rem", fontWeight: "500" },
+        ],
+        "headline-3": ["1.75rem", { lineHeight: "2.25rem", fontWeight: "500" }],
+        "headline-4": ["1.5rem", { lineHeight: "2rem", fontWeight: "500" }],
+        "headline-5": ["1.25rem", { lineHeight: "1.75rem", fontWeight: "500" }],
+        "headline-6": ["1rem", { lineHeight: "1.5rem", fontWeight: "500" }],
+
+        "label-xxl": ["1.5rem", { lineHeight: "2rem", fontWeight: "500" }],
+        "label-xl": ["1.25rem", { lineHeight: "1.75rem", fontWeight: "500" }],
+        "label-lg": ["1rem", { lineHeight: "1.5rem", fontWeight: "500" }],
+        "label-md": ["0.875rem", { lineHeight: "1.25rem", fontWeight: "500" }],
+        "label-sm": ["0.75rem", { lineHeight: "1rem", fontWeight: "500" }],
+
+        "title-xl": ["2rem", { lineHeight: "2.5rem", fontWeight: "500" }],
+        "title-lg": ["1.5rem", { lineHeight: "2rem", fontWeight: "500" }],
+        "title-md": ["1.25rem", { lineHeight: "1.75rem", fontWeight: "500" }],
+        "title-sm": ["1rem", { lineHeight: "1.5rem", fontWeight: "500" }],
+
+        "body-xl": ["1.125rem", { lineHeight: "1.75rem", fontWeight: "400" }],
+        "body-lg": ["1rem", { lineHeight: "1.5rem", fontWeight: "400" }],
+        "body-md": ["0.875rem", { lineHeight: "1.25rem", fontWeight: "400" }],
+        "body-sm": ["0.75rem", { lineHeight: "1rem", fontWeight: "400" }],
+      },
     },
     colors: {
       system: {
@@ -97,6 +139,11 @@ export default {
         baseBlack: "#000000",
         baseWhite: "#FFFFFF",
       },
+    },
+    fontFamily: {
+      sans: ["IRANYekanXVF"],
+      serif: ["IRANYekanXVF"],
+      mono: ["IRANYekanXVF"],
     },
   },
   plugins: [],
