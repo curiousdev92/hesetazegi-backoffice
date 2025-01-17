@@ -60,15 +60,15 @@ const ItemRow: FC<PropTypes> = (props) => {
 
   return (
     <div
-      className={
+      className={`grow ${
         pinned
           ? "order-1 bg-gradient-to-l from-system-pink/10 to-system-white/10"
           : "order-2"
-      }
+      }`}
     >
       <div className="py-2 px-3 flex items-center gap-10 grid-cols-2 hover:bg-gray-50 group">
         <div
-          className="grow grid gap-6 items-center"
+          className="grow grid gap-6 items-center text-ellipsis"
           style={{
             gridTemplateColumns: `2.5rem 1fr repeat(${locales.length}, 7.125rem)`,
           }}
@@ -81,7 +81,7 @@ const ItemRow: FC<PropTypes> = (props) => {
               className="rounded"
             />
             {pinned ? (
-              <span className="bg-system-danger text-label-baseWhite absolute -top-0.5 -left-0.5 shadow-[0_0_1.5px_white] rounded-full p-1">
+              <span className="bg-system-danger text-label-baseWhite absolute -top-0.5 -left-0.5 shadow-[0_0_0_1.5px_white] rounded-full p-1">
                 <FontIcon icon="pin" className="text-[10px]" />
               </span>
             ) : null}

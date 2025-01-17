@@ -8,7 +8,7 @@ import { useLoaderData } from "react-router";
 
 type PropTypes = {};
 
-const RecipesPage: FC<PropTypes> = () => {
+const RecipeListPage: FC<PropTypes> = () => {
   const data = useLoaderData() as { total: number; records: FoodRecipeItem[] };
   const recipes = data.records.map((r) => ({
     date: r.creationDate * 1000,
@@ -53,4 +53,4 @@ const RecipesPage: FC<PropTypes> = () => {
     </PageTransition>
   );
 };
-export default RecipesPage;
+export default RecipeListPage;
