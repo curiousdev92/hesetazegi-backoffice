@@ -8,6 +8,7 @@ import QAPage from "@src/pages/QuestionAnswer";
 import RecipesPage from "@src/pages/Recipes";
 import ProtectRoutes from "@src/router/protect-routes";
 import { getMenu } from "@src/services/getMenu";
+import { getRecipes } from "@src/services/getRecipes";
 import { createBrowserRouter, Navigate } from "react-router";
 
 const router = createBrowserRouter([
@@ -18,12 +19,17 @@ const router = createBrowserRouter([
       {
         element: <MainLayout />,
         errorElement: <ErrorLayout />,
-        hydrateFallbackElement: <HydrateFallbackLayout />,
         loader: getMenu,
+        shouldRevalidate: () => false,
         children: [
           { index: true, element: <Navigate to="/dashboard" /> },
           { path: "/dashboard", element: <DashboardPage /> },
-          { path: "/recipes", element: <RecipesPage /> },
+          {
+            path: "/recipes",
+            element: <RecipesPage />,
+            loader: getRecipes,
+            hydrateFallbackElement: <HydrateFallbackLayout />,
+          },
           { path: "/qa", element: <QAPage /> },
         ],
       },
