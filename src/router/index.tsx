@@ -5,9 +5,12 @@ import DashboardPage from "@src/pages/Dashboard";
 import LoginPage from "@src/pages/Login";
 import NotFoundPage from "@src/pages/NotFound";
 import QAPage from "@src/pages/QuestionAnswer";
-import RecipesPage from "@src/pages/Recipes";
+import RecipeListPage from "@src/pages/Recipe/list";
+import WeblogListPage from "@src/pages/Weblog/list";
 import ProtectRoutes from "@src/router/protect-routes";
 import { getMenu } from "@src/services/getMenu";
+import { getRecipes } from "@src/services/getRecipes";
+import { getWeblogs } from "@src/services/getWeblogs";
 import { createBrowserRouter, Navigate } from "react-router";
 
 const router = createBrowserRouter([
@@ -18,12 +21,23 @@ const router = createBrowserRouter([
       {
         element: <MainLayout />,
         errorElement: <ErrorLayout />,
-        hydrateFallbackElement: <HydrateFallbackLayout />,
         loader: getMenu,
+        shouldRevalidate: () => false,
         children: [
           { index: true, element: <Navigate to="/dashboard" /> },
           { path: "/dashboard", element: <DashboardPage /> },
-          { path: "/recipes", element: <RecipesPage /> },
+          {
+            path: "/recipes",
+            element: <RecipeListPage />,
+            loader: getRecipes,
+            hydrateFallbackElement: <HydrateFallbackLayout />,
+          },
+          {
+            path: "/weblogs",
+            element: <WeblogListPage />,
+            loader: getWeblogs,
+            hydrateFallbackElement: <HydrateFallbackLayout />,
+          },
           { path: "/qa", element: <QAPage /> },
         ],
       },

@@ -25,12 +25,7 @@ body {
   bottom: 0;
 }
 
-a.active {
-  color: dodgerblue;
-}
-
 input {
-  border: 1px solid black;
-  border-radius: 12px;
-  padding: 6px 12px;
+  outline: none;
+  background-color: transparent;
 }

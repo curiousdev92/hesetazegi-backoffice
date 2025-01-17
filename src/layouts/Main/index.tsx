@@ -6,8 +6,9 @@ import SideMenu from "../SideMenu";
 export default function MainLayout() {
   const data = useLoaderData();
   const setMenu = useStore((st) => st.setMenu);
+  const menu = useStore((st) => st.menu);
 
-  setMenu(data);
+  !menu?.length && setMenu(data);
 
   return (
     <div

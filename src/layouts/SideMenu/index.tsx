@@ -1,6 +1,8 @@
 import DashboardIcon from "@src/assets/images/dashboard.svg?react";
 import QAIcon from "@src/assets/images/qa.svg?react";
 import RecipesIcon from "@src/assets/images/recipes.svg?react";
+import Avatar from "@src/components/Avatar";
+import IconButton from "@src/components/IconButton";
 import SVGElement from "@src/components/SVG";
 import { useStore } from "@src/store";
 import { FC, MouseEventHandler, ReactNode, useState } from "react";
@@ -34,6 +36,10 @@ const SideMenu: FC<PropTypes> = (props) => {
     id !== pathname && navigate(id);
   };
 
+  const logOut = () => {
+    console.log("logOut");
+  };
+
   return (
     <aside
       className={`grid grid-flow-row grid-rows-[5rem_1fr_76px] overflow-hidden transition-[grid-template-columns] duration-500 text-label-baseWhite bg-primary-800 ${animateClass}`}
@@ -41,16 +47,15 @@ const SideMenu: FC<PropTypes> = (props) => {
       {/* Top gradient */}
       <div className="col-start-1 col-end-3 row-start-1 bg-gradient-to-l from-[#99A41B] to-system-primary border-b border-border-quaternary"></div>
 
-      <button
+      <IconButton
+        icon={"menu"}
         className="row-start-1 col-start-1"
-        onClick={toggleMenu}
-        type="button"
-      >
-        &#9776;
-      </button>
+        iconClasses="text-[1.5rem]"
+        clickHandler={toggleMenu}
+      />
 
       {/* Header */}
-      <header className="row-start-1 col-start-2">Logo</header>
+      <header className="row-start-1 col-start-2 self-center">Logo</header>
 
       {/* Content - Dynamic Menu */}
       <ul className="row-start-2 col-start-1 col-end-3 relative overflow-hidden text-nowrap py-4 flex flex-col gap-2 z-[1]">
@@ -87,7 +92,22 @@ const SideMenu: FC<PropTypes> = (props) => {
       </ul>
 
       {/* Footer */}
-      <footer className="row-start-3 col-start-1 col-end-3">Logout</footer>
+      <footer
+        className="row-start-3 col-start-1 col-end-3 text-nowrap overflow-hidden border-t border-[#FFFFFF33] border-opacity-20 flex items-center gap-3 min-w-fit transition-[padding]"
+        style={{ padding: show ? 16 : "1rem .5rem" }}
+      >
+        <Avatar img="" size={40} />
+        <div className="grow">
+          <p>محمد نادرخانی</p>
+          <p>فرانت کارِ عالم</p>
+        </div>
+        <IconButton
+          icon="logout"
+          className="text-system-yellow"
+          iconClasses="text-[1.5rem]"
+          clickHandler={logOut}
+        />
+      </footer>
     </aside>
   );
 };
