@@ -5,11 +5,12 @@ import { weblogsPageLimit } from "@src/utils/constants";
 import { formatNumber } from "@src/utils/helpers";
 import { motion } from "motion/react";
 import { FC } from "react";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigation } from "react-router";
 
 type PropTypes = {};
 
 const WeblogListPage: FC<PropTypes> = () => {
+  const navigation = useNavigation();
   const data = useLoaderData() as { total: number; records: WeblogItem[] };
   const weblogs = data.records.map((w) => ({
     date: w.publishedTime,
@@ -37,6 +38,7 @@ const WeblogListPage: FC<PropTypes> = () => {
         sortComponent={<div>Sort dropdown</div> /** @todo Use DropDown here */}
         total={data.total}
         limit={weblogsPageLimit}
+        loading={navigation.state === "loading"}
         items={weblogs.map((welog, i) => (
           <motion.div
             key={welog.key}
