@@ -1,6 +1,7 @@
 import ErrorLayout from "@src/layouts/Error";
 import HydrateFallbackLayout from "@src/layouts/HydrateFallback";
 import MainLayout from "@src/layouts/Main";
+import AdminManagement from "@src/pages/AdminManage";
 import DashboardPage from "@src/pages/Dashboard";
 import LoginPage from "@src/pages/Login";
 import NotFoundPage from "@src/pages/NotFound";
@@ -37,6 +38,7 @@ const router = createBrowserRouter([
             loader: getWeblogs,
           },
           { path: "/qa", element: <QAPage /> },
+          { path: "/admin-management", element: <AdminManagement /> },
         ],
       },
     ],
