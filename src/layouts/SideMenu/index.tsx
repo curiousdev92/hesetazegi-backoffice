@@ -1,6 +1,8 @@
+import AdminManagementIcon from "@src/assets/images/admin-management.svg?react";
 import DashboardIcon from "@src/assets/images/dashboard.svg?react";
 import QAIcon from "@src/assets/images/qa.svg?react";
 import RecipesIcon from "@src/assets/images/recipes.svg?react";
+import WeblogsIcon from "@src/assets/images/weblogs.svg?react";
 import Avatar from "@src/components/Avatar";
 import IconButton from "@src/components/IconButton";
 import SVGElement from "@src/components/SVG";
@@ -25,6 +27,8 @@ const SideMenu: FC<PropTypes> = (props) => {
     dashboard: <DashboardIcon />,
     "food-recipe": <RecipesIcon />,
     "question-answer": <QAIcon />,
+    weblogs: <WeblogsIcon />,
+    "admin-management": <AdminManagementIcon />,
   };
 
   const toggleMenu = () => {
@@ -64,11 +68,11 @@ const SideMenu: FC<PropTypes> = (props) => {
             key={item.key}
             onClick={handleClick}
             id={item.route}
-            className={
+            className={`hover:bg-primary-700 ${
               item.route === pathname
-                ? "text-system-yellow [&>li]:bg-primary-700"
+                ? "text-system-yellow bg-primary-700"
                 : "text-label-baseWhite"
-            }
+            }`}
           >
             <li className="py-3 px-4 flex gap-4">
               <SVGElement
@@ -93,7 +97,7 @@ const SideMenu: FC<PropTypes> = (props) => {
 
       {/* Footer */}
       <footer
-        className="row-start-3 col-start-1 col-end-3 text-nowrap overflow-hidden border-t border-[#FFFFFF33] border-opacity-20 flex items-center gap-3 min-w-fit transition-[padding]"
+        className="row-start-3 col-start-1 col-end-3 text-nowrap overflow-hidden border-t border-[#FFFFFF33] border-opacity-20 flex items-center gap-3 min-w-fit transition-[padding] duration-500"
         style={{ padding: show ? 16 : "1rem .5rem" }}
       >
         <Avatar img="" size={40} />

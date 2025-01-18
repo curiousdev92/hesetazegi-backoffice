@@ -3,6 +3,7 @@ import ItemRow from "@src/layouts/ItemRow";
 import ListWithFiltersLayout from "@src/layouts/ListWithFilters";
 import { recipesPageLimit } from "@src/utils/constants";
 import { formatNumber } from "@src/utils/helpers";
+import { motion } from "motion/react";
 import { FC } from "react";
 import { useLoaderData } from "react-router";
 
@@ -40,14 +41,21 @@ const RecipeListPage: FC<PropTypes> = () => {
         total={data.total}
         limit={recipesPageLimit}
         items={recipes.map((recipe, i) => (
-          <ItemRow
+          <motion.div
             key={recipe.key}
-            data={recipe}
-            locales={["fa", "en"]}
-            actions={["copy", "delete"]}
-            divider={i < recipesLen - 1}
-            link={recipe.link}
-          />
+            initial={{ opacity: 0, translateY: -20 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            exit={{ opacity: 0, translateY: -20 }}
+            transition={{ duration: 0.3, ease: "easeInOut", delay: 0.02 * i }}
+          >
+            <ItemRow
+              data={recipe}
+              locales={["fa", "en"]}
+              actions={["copy", "delete"]}
+              divider={i < recipesLen - 1}
+              link={recipe.link}
+            />
+          </motion.div>
         ))}
       />
     </PageTransition>

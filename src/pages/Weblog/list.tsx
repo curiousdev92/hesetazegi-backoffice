@@ -3,6 +3,7 @@ import ItemRow from "@src/layouts/ItemRow";
 import ListWithFiltersLayout from "@src/layouts/ListWithFilters";
 import { weblogsPageLimit } from "@src/utils/constants";
 import { formatNumber } from "@src/utils/helpers";
+import { motion } from "motion/react";
 import { FC } from "react";
 import { useLoaderData } from "react-router";
 
@@ -37,14 +38,21 @@ const WeblogListPage: FC<PropTypes> = () => {
         total={data.total}
         limit={weblogsPageLimit}
         items={weblogs.map((welog, i) => (
-          <ItemRow
+          <motion.div
             key={welog.key}
-            data={welog}
-            locales={["fa", "en"]}
-            actions={["pin", "copy", "delete"]}
-            divider={i < weblogsLen - 1}
-            link={welog.link}
-          />
+            initial={{ opacity: 0, translateY: -20 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            exit={{ opacity: 0, translateY: -20 }}
+            transition={{ duration: 0.3, ease: "easeInOut", delay: 0.02 * i }}
+          >
+            <ItemRow
+              data={welog}
+              locales={["fa", "en"]}
+              actions={["pin", "copy", "delete"]}
+              divider={i < weblogsLen - 1}
+              link={welog.link}
+            />
+          </motion.div>
         ))}
       />
     </PageTransition>
