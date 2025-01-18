@@ -30,13 +30,11 @@ const router = createBrowserRouter([
             path: "/recipes",
             element: <RecipeListPage />,
             loader: getRecipes,
-            hydrateFallbackElement: <HydrateFallbackLayout />,
           },
           {
             path: "/weblogs",
             element: <WeblogListPage />,
             loader: getWeblogs,
-            hydrateFallbackElement: <HydrateFallbackLayout />,
           },
           { path: "/qa", element: <QAPage /> },
         ],
