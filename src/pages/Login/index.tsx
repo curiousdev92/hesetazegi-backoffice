@@ -3,11 +3,9 @@ import isAuth from "@src/utils/auth";
 import { setCookie } from "@src/utils/cookies";
 import { SIGNING_URL } from "@src/utils/urls";
 import { FC, FormEventHandler } from "react";
-import { Navigate, useNavigate } from "react-router";
+import { Navigate } from "react-router";
 
 const LoginPage: FC = () => {
-  const navigate = useNavigate();
-
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
@@ -26,7 +24,7 @@ const LoginPage: FC = () => {
         );
         if (token && typeof token === "string") {
           setCookie("bo-tkn", token, 6);
-          navigate("/dashboard");
+          location.href = "/dashboard";
         }
       } catch (error) {
         console.log(error);
