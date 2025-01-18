@@ -1,6 +1,7 @@
 import ErrorLayout from "@src/layouts/Error";
 import HydrateFallbackLayout from "@src/layouts/HydrateFallback";
 import MainLayout from "@src/layouts/Main";
+import AdminManagement from "@src/pages/AdminManage";
 import DashboardPage from "@src/pages/Dashboard";
 import LoginPage from "@src/pages/Login";
 import NotFoundPage from "@src/pages/NotFound";
@@ -30,15 +31,14 @@ const router = createBrowserRouter([
             path: "/recipes",
             element: <RecipeListPage />,
             loader: getRecipes,
-            hydrateFallbackElement: <HydrateFallbackLayout />,
           },
           {
             path: "/weblogs",
             element: <WeblogListPage />,
             loader: getWeblogs,
-            hydrateFallbackElement: <HydrateFallbackLayout />,
           },
           { path: "/qa", element: <QAPage /> },
+          { path: "/admin-management", element: <AdminManagement /> },
         ],
       },
     ],

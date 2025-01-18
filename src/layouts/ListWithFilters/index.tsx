@@ -1,4 +1,5 @@
 import Pagination from "@src/components/Pagination";
+import Spinner from "@src/components/Spinner";
 import Tabs from "@src/components/Tabs";
 import TextField from "@src/components/Textfield";
 import { FC, ReactNode } from "react";
@@ -12,11 +13,20 @@ type PropTypes = {
   items: ReactNode[];
   filters: ReactNode[];
   limit: number;
+  loading: boolean;
 };
 
 const ListWithFiltersLayout: FC<PropTypes> = (props) => {
-  const { filterTitle, tabItems, title, sortComponent, total, items, limit } =
-    props;
+  const {
+    filterTitle,
+    tabItems,
+    title,
+    sortComponent,
+    total,
+    items,
+    limit,
+    loading,
+  } = props;
 
   return (
     <section className="flex h-full">
@@ -59,7 +69,13 @@ const ListWithFiltersLayout: FC<PropTypes> = (props) => {
           </div>
         </header>
         <div className="overflow-auto h-full max-h-full flex flex-col">
-          {items}
+          {loading ? (
+            <div className="grid place-items-center h-full">
+              <Spinner size="m" />
+            </div>
+          ) : (
+            items
+          )}
         </div>
         <footer className="sticky bottom-0 bg-content-primary p-4 border-t border-border-secondary">
           {total ? <Pagination total={total} limit={limit} /> : null}
