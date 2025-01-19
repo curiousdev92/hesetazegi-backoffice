@@ -1,5 +1,5 @@
 import { recipesPageLimit } from "@src/utils/constants";
-import { GET_RECIPE_STATUSES_URL, GET_RECIPES_URL } from "@src/utils/urls";
+import { GET_RECIPE_LIST, GET_RECIPE_STATUSES } from "@src/utils/urls";
 import { LoaderFunctionArgs } from "react-router";
 import { GET } from ".";
 
@@ -29,7 +29,7 @@ export const getRecipes = async ({ request }: LoaderFunctionArgs) => {
     result.data = cache.get(recipeCacheKey);
   } else {
     const data: RecipesDataType = await GET(
-      `${GET_RECIPES_URL}/${"fa"}${queryString ? "?" : ""}${queryString}`
+      `${GET_RECIPE_LIST}/${"fa"}${queryString ? "?" : ""}${queryString}`
     );
     result.data = data;
     cache.set(recipeCacheKey, data);
@@ -39,7 +39,7 @@ export const getRecipes = async ({ request }: LoaderFunctionArgs) => {
   if (cache.has(statusesCacheKey)) {
     result.statuses = cache.get(statusesCacheKey);
   } else {
-    const statuses: recipeStatusesType = await GET(GET_RECIPE_STATUSES_URL);
+    const statuses: recipeStatusesType = await GET(GET_RECIPE_STATUSES);
     result.statuses = statuses;
     cache.set(statusesCacheKey, statuses);
   }

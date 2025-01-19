@@ -1,5 +1,5 @@
 import { weblogsPageLimit } from "@src/utils/constants";
-import { GET_WEBLOGS_URL } from "@src/utils/urls";
+import { GET_WEBLOG_LIST } from "@src/utils/urls";
 import { LoaderFunctionArgs } from "react-router";
 import { GET } from ".";
 
@@ -17,7 +17,7 @@ export const getWeblogs = async ({ request }: LoaderFunctionArgs) => {
 
   const queryString = decodeURI(searchParams.toString());
   const weblogs = await GET(
-    `${GET_WEBLOGS_URL}/${"fa"}${queryString ? "?" : ""}${queryString}`
+    `${GET_WEBLOG_LIST}/${"fa"}${queryString ? "?" : ""}${queryString}`
   );
   cache.set(cacheKey, weblogs);
 
