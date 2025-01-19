@@ -14,6 +14,7 @@ type PropTypes = {
   filters: ReactNode[];
   limit: number;
   loading: boolean;
+  onTabChange?: (key?: TabItem["key"]) => void;
 };
 
 const ListWithFiltersLayout: FC<PropTypes> = (props) => {
@@ -26,6 +27,7 @@ const ListWithFiltersLayout: FC<PropTypes> = (props) => {
     items,
     limit,
     loading,
+    onTabChange,
   } = props;
 
   return (
@@ -52,7 +54,7 @@ const ListWithFiltersLayout: FC<PropTypes> = (props) => {
                 type={"text"}
                 startIcon="search-normal"
                 placeholder="جستجو دستورپخت..."
-                clear /** @todo This prop doesn't work properly */
+                clear /** @bug This prop doesn't work properly */
               />
             </div>
             {/* Action Button */}
@@ -61,7 +63,7 @@ const ListWithFiltersLayout: FC<PropTypes> = (props) => {
           <div className="flex">
             {/* Tabs */}
             <div className="grow px-4">
-              <Tabs items={tabItems} /> {/** @todo Add onTabChange */}
+              <Tabs items={tabItems} onTabChange={onTabChange} />
             </div>
 
             {/* Sort Dropdown */}

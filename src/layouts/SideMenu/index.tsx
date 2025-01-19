@@ -59,7 +59,9 @@ const SideMenu: FC<PropTypes> = (props) => {
       />
 
       {/* Header */}
-      <header className="row-start-1 col-start-2 self-center">Logo</header>
+      <header className="row-start-1 col-start-2 self-center">
+        Logo{/** @todo replace with i18n */}
+      </header>
 
       {/* Content - Dynamic Menu */}
       <ul className="row-start-2 col-start-1 col-end-3 relative overflow-hidden text-nowrap py-4 flex flex-col gap-2 z-[1]">
@@ -102,8 +104,12 @@ const SideMenu: FC<PropTypes> = (props) => {
       >
         <Avatar img="" size={40} />
         <div className="grow">
-          <p>محمد نادرخانی</p>
-          <p>فرانت کارِ عالم</p>
+          <p className="text-label-md text-label-baseWhite mb-1">
+            محمد نادرخانی {/** @todo Replace with translate */}
+          </p>
+          <p className="text-body-sm text-label-quaternary">
+            فرانت کارِ دو عالم {/** @todo Replace with translate */}
+          </p>
         </div>
         <IconButton
           icon="logout"

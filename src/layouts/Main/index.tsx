@@ -13,7 +13,7 @@ export default function MainLayout() {
   return (
     <div
       className="grid grid-cols-[auto_1fr] h-full"
-      style={{ direction: "rtl" }}
+      style={{ direction: "rtl" }} /** @todo Make this dynamic with I18n */
     >
       <SideMenu />
 

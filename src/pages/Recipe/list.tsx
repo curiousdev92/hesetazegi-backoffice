@@ -5,13 +5,30 @@ import { recipesPageLimit } from "@src/utils/constants";
 import { formatNumber } from "@src/utils/helpers";
 import { motion } from "motion/react";
 import { FC } from "react";
-import { useLoaderData, useNavigation } from "react-router";
+import {
+  useLoaderData,
+  useLocation,
+  useNavigate,
+  useNavigation,
+} from "react-router";
 
 type PropTypes = {};
+type RecipesDataType = { total: number; records: FoodRecipeItem[] };
+type StatusesDataType = {
+  code: number;
+  count: number;
+  isMain: boolean;
+  label: string;
+}[];
 
 const RecipeListPage: FC<PropTypes> = () => {
   const navigation = useNavigation();
-  const data = useLoaderData() as { total: number; records: FoodRecipeItem[] };
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { data, statuses } = useLoaderData() as {
+    data: RecipesDataType;
+    statuses: StatusesDataType;
+  };
   const recipes = data.records.map((r) => ({
     date: r.creationDate * 1000,
     title: r.recipeTitle,
@@ -23,13 +40,39 @@ const RecipeListPage: FC<PropTypes> = () => {
     link: "#sample-link" /** @todo change link to dynamic with {r.foodRecipeKey} and {baseURL} */,
   }));
   const recipesLen = recipes.length;
+  const tabItems: TabItem[] = statuses.map((st) => ({
+    label: st.label,
+    key: String(st.code),
+    count: formatNumber(st.count, "fa"),
+  }));
 
-  const tabItems: TabItem[] = [
-    { label: "پیش نویس", key: "draft", count: formatNumber(43, "fa") },
-    { label: "ارزیابی", key: "evaluate", count: formatNumber(78, "fa") },
-    { label: "صف انتشار", key: "queue", count: formatNumber(157, "fa") },
-    { label: "منتشر شده", key: "published", count: formatNumber(275, "fa") },
-  ];
+  const renderRecipeItems = recipes.map((recipe, i) => (
+    <motion.div
+      key={recipe.key}
+      initial={{ opacity: 0, translateY: -20 }}
+      animate={{ opacity: 1, translateY: 0 }}
+      exit={{ opacity: 0, translateY: -20 }}
+      transition={{ duration: 0.3, ease: "easeInOut", delay: 0.02 * i }}
+    >
+      <ItemRow
+        data={recipe}
+        locales={["fa", "en"]}
+        actions={["copy", "delete"]}
+        divider={i < recipesLen - 1}
+        link={recipe.link}
+      />
+    </motion.div>
+  ));
+
+  const handleTabChange: (key?: TabItem["key"]) => void = (tab) => {
+    tab && changeParam("status", tab);
+  };
+
+  const changeParam = (key: string, value: string) => {
+    const params = new URLSearchParams(location.search);
+    params.set(key, value);
+    navigate(`${location.pathname}?${params.toString()}`);
+  };
 
   return (
     <PageTransition className="h-full">
@@ -42,23 +85,8 @@ const RecipeListPage: FC<PropTypes> = () => {
         total={data.total}
         limit={recipesPageLimit}
         loading={navigation.state === "loading"}
-        items={recipes.map((recipe, i) => (
-          <motion.div
-            key={recipe.key}
-            initial={{ opacity: 0, translateY: -20 }}
-            animate={{ opacity: 1, translateY: 0 }}
-            exit={{ opacity: 0, translateY: -20 }}
-            transition={{ duration: 0.3, ease: "easeInOut", delay: 0.02 * i }}
-          >
-            <ItemRow
-              data={recipe}
-              locales={["fa", "en"]}
-              actions={["copy", "delete"]}
-              divider={i < recipesLen - 1}
-              link={recipe.link}
-            />
-          </motion.div>
-        ))}
+        items={renderRecipeItems}
+        onTabChange={handleTabChange}
       />
     </PageTransition>
   );
