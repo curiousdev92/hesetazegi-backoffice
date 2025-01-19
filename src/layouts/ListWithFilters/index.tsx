@@ -1,3 +1,5 @@
+import EmptyStateImage from "@src/assets/images/empty-state.png";
+import EmptyState from "@src/components/EmptyState";
 import Pagination from "@src/components/Pagination";
 import Spinner from "@src/components/Spinner";
 import Tabs from "@src/components/Tabs";
@@ -74,6 +76,15 @@ const ListWithFiltersLayout: FC<PropTypes> = (props) => {
           {loading ? (
             <div className="grid place-items-center h-full">
               <Spinner size="m" />
+            </div>
+          ) : items.length === 0 ? (
+            <div className="grid place-items-center h-full">
+              <EmptyState
+                className="self-center"
+                size={"l"}
+                description={"داده ای برای نمایش وجود ندارد"}
+                imgSrc={EmptyStateImage}
+              />
             </div>
           ) : (
             items

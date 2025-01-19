@@ -2,7 +2,7 @@ import PageTransition from "@src/animations/PageTransition";
 import ItemRow from "@src/layouts/ItemRow";
 import ListWithFiltersLayout from "@src/layouts/ListWithFilters";
 import { recipesPageLimit } from "@src/utils/constants";
-import { formatNumber } from "@src/utils/helpers";
+import { formatNumber, updateURLParams } from "@src/utils/helpers";
 import { motion } from "motion/react";
 import { FC } from "react";
 import {
@@ -65,13 +65,8 @@ const RecipeListPage: FC<PropTypes> = () => {
   ));
 
   const handleTabChange: (key?: TabItem["key"]) => void = (tab) => {
-    tab && changeParam("status", tab);
-  };
-
-  const changeParam = (key: string, value: string) => {
-    const params = new URLSearchParams(location.search);
-    params.set(key, value);
-    navigate(`${location.pathname}?${params.toString()}`);
+    const changedURL = updateURLParams("status", String(tab));
+    if (tab) navigate(changedURL);
   };
 
   return (
