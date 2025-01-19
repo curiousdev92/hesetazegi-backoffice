@@ -1,12 +1,13 @@
 import ErrorLayout from "@src/layouts/Error";
 import HydrateFallbackLayout from "@src/layouts/HydrateFallback";
 import MainLayout from "@src/layouts/Main";
-import AdminManagement from "@src/pages/AdminManage";
+import AdminManagementPage from "@src/pages/AdminManagement";
 import DashboardPage from "@src/pages/Dashboard";
 import LoginPage from "@src/pages/Login";
 import NotFoundPage from "@src/pages/NotFound";
 import QAPage from "@src/pages/QuestionAnswer";
 import RecipeListPage from "@src/pages/Recipe/list";
+import RoleManagementPage from "@src/pages/RoleManagement";
 import WeblogListPage from "@src/pages/Weblog/list";
 import ProtectRoutes from "@src/router/protect-routes";
 import { getMenu } from "@src/services/getMenu";
@@ -38,7 +39,8 @@ const router = createBrowserRouter([
             loader: getWeblogs,
           },
           { path: "/qa", element: <QAPage /> },
-          { path: "/admin-management", element: <AdminManagement /> },
+          { path: "/admin-management", element: <AdminManagementPage /> },
+          { path: "/role-management", element: <RoleManagementPage /> },
         ],
       },
     ],
