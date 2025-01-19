@@ -1,7 +1,4 @@
-import EmptyStateImage from "@src/assets/images/empty-state.png";
-import EmptyState from "@src/components/EmptyState";
 import Pagination from "@src/components/Pagination";
-import Spinner from "@src/components/Spinner";
 import Tabs from "@src/components/Tabs";
 import TextField from "@src/components/Textfield";
 import { FC, ReactNode } from "react";
@@ -12,11 +9,12 @@ type PropTypes = {
   tabItems: TabItem[];
   sortComponent: ReactNode;
   total?: number;
-  items: ReactNode[];
+  // items: ReactNode[];
   filters: ReactNode[];
   limit: number;
-  loading: boolean;
+  // loading: boolean;
   onTabChange?: (key?: TabItem["key"]) => void;
+  children: ReactNode;
 };
 
 const ListWithFiltersLayout: FC<PropTypes> = (props) => {
@@ -26,10 +24,12 @@ const ListWithFiltersLayout: FC<PropTypes> = (props) => {
     title,
     sortComponent,
     total,
-    items,
+    // items,
     limit,
-    loading,
+    // loading,
     onTabChange,
+    children,
+    filters,
   } = props;
 
   return (
@@ -39,7 +39,7 @@ const ListWithFiltersLayout: FC<PropTypes> = (props) => {
         <header className="p-6 border-b border-border-secondary text-label-primary text-title-sm">
           {filterTitle}
         </header>
-        <div className="flex flex-col gap-3 py-3"></div>
+        <div className="flex flex-col gap-3 py-3">{filters}</div>
         {/** @todo Pass filter items from props */}
       </aside>
 
@@ -73,7 +73,8 @@ const ListWithFiltersLayout: FC<PropTypes> = (props) => {
           </div>
         </header>
         <div className="overflow-auto h-full max-h-full flex flex-col">
-          {loading ? (
+          {children}
+          {/* {loading ? (
             <div className="grid place-items-center h-full">
               <Spinner size="m" />
             </div>
@@ -88,7 +89,7 @@ const ListWithFiltersLayout: FC<PropTypes> = (props) => {
             </div>
           ) : (
             items
-          )}
+          )} */}
         </div>
         <footer className="sticky bottom-0 bg-content-primary p-4 border-t border-border-secondary">
           {total ? <Pagination total={total} limit={limit} /> : null}

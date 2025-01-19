@@ -1,6 +1,7 @@
 import ErrorLayout from "@src/layouts/Error";
 import HydrateFallbackLayout from "@src/layouts/HydrateFallback";
 import MainLayout from "@src/layouts/Main";
+import WeblogsLayout from "@src/layouts/WeblogsLayout";
 import AdminManagementPage from "@src/pages/AdminManagement";
 import DashboardPage from "@src/pages/Dashboard";
 import LoginPage from "@src/pages/Login";
@@ -13,6 +14,7 @@ import ProtectRoutes from "@src/router/protect-routes";
 import { getMenu } from "@src/services/getMenu";
 import { getRecipes } from "@src/services/getRecipes";
 import { getWeblogs } from "@src/services/getWeblogs";
+import { getWeblogsRequirements } from "@src/services/getWeblogsRequirements";
 import { createBrowserRouter, Navigate } from "react-router";
 
 const router = createBrowserRouter([
@@ -35,8 +37,16 @@ const router = createBrowserRouter([
           },
           {
             path: "/weblogs",
-            element: <WeblogListPage />,
-            loader: getWeblogs,
+            element: <WeblogsLayout />,
+            loader: getWeblogsRequirements,
+            shouldRevalidate: () => false,
+            children: [
+              {
+                index: true,
+                element: <WeblogListPage />,
+                loader: getWeblogs,
+              },
+            ],
           },
           { path: "/qa", element: <QAPage /> },
           { path: "/admin-management", element: <AdminManagementPage /> },
