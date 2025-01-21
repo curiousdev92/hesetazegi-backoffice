@@ -1,3 +1,4 @@
+import { useOutsideClick } from "@src/hooks/useOutsideClick";
 import { FC, ReactNode, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 
@@ -8,20 +9,18 @@ interface PopoverProps {
   offset?: number;
 }
 
-const Popover: FC<PopoverProps> = ({
-  anchorElement,
-  content,
-  placement = "bottom",
-  offset = 8,
-}) => {
+const Popover: FC<PopoverProps> = (props) => {
+  const { anchorElement, content, placement = "bottom", offset = 8 } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: 0 });
-  const anchorRef = useRef<HTMLDivElement>(null);
+  // const anchorRef = useRef<HTMLDivElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
 
-  const togglePopover = () => {
-    setIsOpen(!isOpen);
-  };
+  const togglePopover = () => setIsOpen(!isOpen);
+
+  const closePopover = () => setIsOpen(false);
+
+  const anchorRef = useOutsideClick(closePopover);
 
   useEffect(() => {
     if (isOpen && anchorRef.current && popoverRef.current) {
@@ -72,30 +71,30 @@ const Popover: FC<PopoverProps> = ({
       <div
         ref={anchorRef}
         onClick={togglePopover}
-        style={{ display: "inline-block", cursor: "pointer" }}
+        className={`cursor-pointer relative ${isOpen ? "z-20" : "z-10"}`}
       >
         {anchorElement}
       </div>
 
-      {isOpen &&
-        ReactDOM.createPortal(
-          <div
-            ref={popoverRef}
-            style={{
-              position: "absolute",
-              top: position.top,
-              left: position.left,
-              zIndex: 1000,
-              background: "white",
-              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-              padding: "8px",
-              borderRadius: "4px",
-            }}
-          >
-            {content}
-          </div>,
-          document.body
-        )}
+      {ReactDOM.createPortal(
+        <div
+          ref={popoverRef}
+          className="absolute z-40 transition-[opacity,visibility,transform] min-w-fit overflow-hidden"
+          onClick={closePopover}
+          style={{
+            top: position.top,
+            left: position.left,
+            opacity: isOpen ? 1 : 0,
+            visibility: isOpen ? "visible" : "hidden",
+            transform: isOpen ? "translateY(0)" : "translateY(-10px)",
+            width: anchorRef.current?.clientWidth,
+            direction: "rtl",
+          }}
+        >
+          {content}
+        </div>,
+        document.body
+      )}
     </>
   );
 };
