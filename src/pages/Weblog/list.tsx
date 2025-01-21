@@ -2,7 +2,6 @@ import EmptyStateImage from "@src/assets/images/empty-state.png";
 import EmptyState from "@src/components/EmptyState";
 import Spinner from "@src/components/Spinner";
 import ItemRow from "@src/layouts/ItemRow";
-import { motion } from "motion/react";
 import { FC } from "react";
 import { useLoaderData, useNavigation } from "react-router";
 
@@ -36,22 +35,26 @@ const WeblogListPage: FC<PropTypes> = () => {
     </div>
   ) : (
     <>
-      {weblogs.map((welog, i) => (
-        <motion.div
-          key={welog.key}
-          initial={{ opacity: 0, translateY: -20 }}
-          animate={{ opacity: 1, translateY: 0 }}
-          exit={{ opacity: 0, translateY: -20 }}
-          transition={{ duration: 0.3, ease: "easeInOut", delay: 0.02 * i }}
-        >
-          <ItemRow
-            data={welog}
-            locales={["fa", "en"]}
-            actions={["pin", "copy", "delete"]}
-            divider={i < weblogsLen - 1}
-            link={welog.link}
-          />
-        </motion.div>
+      {weblogs.map((weblog, i) => (
+        /**
+         * @todo animate this with an eye on pin animation
+         */
+        // <motion.div
+        //   key={weblog.key}
+        //   initial={{ opacity: 0, translateY: -20 }}
+        //   animate={{ opacity: 1, translateY: 0 }}
+        //   exit={{ opacity: 0, translateY: -20 }}
+        //   transition={{ duration: 0.3, ease: "easeInOut", delay: 0.02 * i }}
+        // >
+        <ItemRow
+          data={weblog}
+          key={weblog.key}
+          locales={["fa", "en"]}
+          actions={["pin", "copy", "delete"]}
+          divider={i < weblogsLen - 1}
+          link={weblog.link}
+        />
+        // </motion.div>
       ))}
     </>
   );
