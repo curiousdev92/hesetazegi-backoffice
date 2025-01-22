@@ -9,11 +9,14 @@ interface DropDownProps {
   size: "m" | "l";
   onSelect?: (item: ItemType) => void;
   fullWidth?: boolean;
+  defaultSelected?: ItemType;
 }
 
 const DropDown: FC<DropDownProps> = (props) => {
-  const { items, size, onSelect, fullWidth } = props;
-  const [selected, setSelected] = useState<ItemType>();
+  const { items, size, onSelect, fullWidth, defaultSelected } = props;
+  const [selected, setSelected] = useState<ItemType | undefined>(
+    defaultSelected
+  );
 
   const handleSelect: MouseEventHandler<HTMLLIElement> = (e) => {
     const { id } = e.currentTarget;
@@ -43,7 +46,9 @@ const DropDown: FC<DropDownProps> = (props) => {
               id={key}
               onClick={handleSelect}
               role="button"
-              className="text-label-primary text-body-md py-1.5 px-3 hover:bg-gray-50 rounded-md text-start"
+              className={`text-label-primary text-body-md py-1.5 px-3 hover:bg-gray-50 ${
+                selected?.key === key ? "bg-primary-50" : ""
+              } rounded-md text-start`}
             >
               {label}
             </li>
