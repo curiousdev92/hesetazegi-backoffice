@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { FC, MouseEventHandler, useState } from "react";
-import { useParams } from "react-router";
+import { useSearchParams } from "react-router";
 import Badge from "../Badge";
 
 type PropTypes = {
@@ -13,7 +13,8 @@ const Tabs: FC<PropTypes> = (props) => {
    * @todo This component is not yet complete
    */
   const { items, onTabChange } = props;
-  const { tab } = useParams();
+  const [searchParams] = useSearchParams();
+  const tab = searchParams.get("tab");
   const defaultTab = tab ?? items[0].key;
   const [selected, setSelected] = useState<string | undefined>(defaultTab);
 

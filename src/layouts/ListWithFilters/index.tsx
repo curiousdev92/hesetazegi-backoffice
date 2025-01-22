@@ -9,10 +9,8 @@ type PropTypes = {
   tabItems: TabItem[];
   sortComponent: ReactNode;
   total?: number;
-  // items: ReactNode[];
   filters: ReactNode[];
   limit: number;
-  // loading: boolean;
   onTabChange?: (key?: TabItem["key"]) => void;
   children: ReactNode;
 };
@@ -24,9 +22,7 @@ const ListWithFiltersLayout: FC<PropTypes> = (props) => {
     title,
     sortComponent,
     total,
-    // items,
     limit,
-    // loading,
     onTabChange,
     children,
     filters,
@@ -35,13 +31,15 @@ const ListWithFiltersLayout: FC<PropTypes> = (props) => {
   return (
     <section className="flex h-full">
       {/* Filters */}
-      <aside className="border-e border-border-secondary min-w-[272px]">
-        <header className="p-6 border-b border-border-secondary text-label-primary text-title-sm">
-          {filterTitle}
-        </header>
-        <div className="flex flex-col gap-3 py-3">{filters}</div>
-        {/** @todo Pass filter items from props */}
-      </aside>
+      {filters?.length ? (
+        <aside className="border-e border-border-secondary min-w-[272px]">
+          <header className="p-6 border-b border-border-secondary text-label-primary text-title-sm">
+            {filterTitle}
+          </header>
+          <div className="flex flex-col gap-3 py-3">{filters}</div>
+          {/** @todo Pass filter items from props */}
+        </aside>
+      ) : null}
 
       {/* Main Content */}
       <div className="flex flex-col grow">
