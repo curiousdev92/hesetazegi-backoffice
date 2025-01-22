@@ -40,7 +40,7 @@ const WeblogsLayout: FC<PropTypes> = (props) => {
         ))}
         filterTitle="فیلتر و دسته‌بندی" /** @todo change text with translated texts */
         tabItems={tabItems}
-        title="لیست دستور پخت" /** @todo change text with translated texts */
+        title="لیست مجله" /** @todo change text with translated texts */
         sortComponent={
           <div className="w-40">
             <DropDown

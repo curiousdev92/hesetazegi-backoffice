@@ -1,5 +1,5 @@
 import { recipesPageLimit } from "@src/utils/constants";
-import { GET_RECIPE_LIST, GET_RECIPE_STATUSES } from "@src/utils/urls";
+import { GET_RECIPE_LIST } from "@src/utils/urls";
 import { LoaderFunctionArgs } from "react-router";
 import { GET } from ".";
 
@@ -8,41 +8,26 @@ const cache = new Map();
 export const getRecipes = async ({ request }: LoaderFunctionArgs) => {
   const { searchParams } = new URL(request.url);
   const page = searchParams.get("page") || 1;
+  const sort = searchParams.get("sort");
+  const status = searchParams.get("tab") || 200;
+  !searchParams.get("page") && searchParams.set("page", "1");
+  searchParams.set("limit", String(recipesPageLimit));
+  searchParams.set("status", String(status));
+  !sort && searchParams.set("sort", "srt-newest");
+  const queryString = decodeURI(searchParams.toString());
 
   // Set a fixed cache key for pages
   const recipeCacheKeyBase = `recipes/${page}`;
-  const statusesCacheKey = `statuses/recipe`;
 
-  // Build a query string excluding "page" to handle parameter-specific caching
-  searchParams.set("limit", String(recipesPageLimit));
-  const queryString = decodeURI(searchParams.toString());
   const recipeCacheKey = `${recipeCacheKeyBase}?${queryString}`;
 
-  // Initialize result structure
-  const result: { data: RecipesDataType; statuses: recipeStatusesType } = {
-    data: { records: [], total: 0 },
-    statuses: [],
-  };
-
-  // Check recipe cache specific to the query parameters (page and others)
   if (cache.has(recipeCacheKey)) {
-    result.data = cache.get(recipeCacheKey);
-  } else {
-    const data: RecipesDataType = await GET(
-      `${GET_RECIPE_LIST}/${"fa"}${queryString ? "?" : ""}${queryString}`
-    );
-    result.data = data;
-    cache.set(recipeCacheKey, data);
+    return cache.get(recipeCacheKey);
   }
 
-  // Check statuses cache (unchanged by query params)
-  if (cache.has(statusesCacheKey)) {
-    result.statuses = cache.get(statusesCacheKey);
-  } else {
-    const statuses: recipeStatusesType = await GET(GET_RECIPE_STATUSES);
-    result.statuses = statuses;
-    cache.set(statusesCacheKey, statuses);
-  }
-
-  return result;
+  const data: RecipesDataType = await GET(
+    `${GET_RECIPE_LIST}/${"fa"}${queryString ? "?" : ""}${queryString}`
+  );
+  cache.set(recipeCacheKey, data);
+  return data;
 };
