@@ -38,7 +38,7 @@ const Badge: FC<PropTypes> = (props) => {
 
   return (
     <div
-      className={`text-label-baseWhite ${sizes[size]} ${variants[variant]} ${radiuses[type]}`}
+      className={`text-label-baseWhite min-w-4 min-h-4 ${sizes[size]} ${variants[variant]} ${radiuses[type]}`}
     >
       {label}
     </div>
