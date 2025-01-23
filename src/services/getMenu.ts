@@ -1,8 +1,8 @@
-import { GET_MENU_URL } from "@src/utils/urls";
+import { GET_MENU } from "@src/utils/urls";
 import { GET } from ".";
 
 export const getMenu = async () => {
-  const menu = (await GET(`${GET_MENU_URL}/fa`)) as MenuEntity[];
+  const menu = (await GET(`${GET_MENU}/fa`)) as MenuEntity[];
   return [
     ...menu,
     {

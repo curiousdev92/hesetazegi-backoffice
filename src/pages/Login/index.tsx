@@ -1,7 +1,7 @@
 import { POST } from "@src/services";
 import isAuth from "@src/utils/auth";
 import { setCookie } from "@src/utils/cookies";
-import { SIGNING_URL } from "@src/utils/urls";
+import { SIGNING } from "@src/utils/urls";
 import { FC, FormEventHandler } from "react";
 import { Navigate } from "react-router";
 
@@ -17,7 +17,7 @@ const LoginPage: FC = () => {
     } else {
       try {
         const token = await POST(
-          SIGNING_URL,
+          SIGNING,
           { username, password },
           undefined,
           true

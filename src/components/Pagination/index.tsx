@@ -11,7 +11,6 @@ const Pagination: FC<PropTypes> = (props) => {
 
   const [params] = useSearchParams(); // Replace with react-dom in react project
   const pageParam = +(params.get("page") || 1);
-  const filterParam = params.get("filter");
   const { pathname } = useLocation(); // Replace with react-dom in react project
   const navigate = useNavigate(); // Replace with react-dom in react project
   const [current, setCurrent] = useState(pageParam);
@@ -27,12 +26,8 @@ const Pagination: FC<PropTypes> = (props) => {
     if (+page === +pageParam) return;
     const url = new URL(document.location as any);
     const params = new URLSearchParams(url.search);
-    const urlPageParam = params.get("page");
-    if (urlPageParam) {
-      params.set("page", String(page));
-    } else {
-      params.append("page", String(page));
-    }
+    params.set("page", String(page));
+
     setLoading(true);
     setCurrent(+page);
     navigate(`${pathname}?${params.toString()}`, { replace: true });
@@ -68,7 +63,7 @@ const Pagination: FC<PropTypes> = (props) => {
     if (pageParam > lastPage) {
       navigateToPage(lastPage);
     }
-  }, [filterParam]);
+  }, [lastPage]);
 
   return (
     <nav className="flex max-w-full overflow-hidden justify-center">

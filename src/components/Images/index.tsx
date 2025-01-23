@@ -42,7 +42,9 @@ export default function Img({ src, alt, ratio, height, className }: PropType) {
         height: height,
         width: (height * ratio[0]) / ratio[1],
       }}
-      className={`overflow-clip relative flex items-center justify-center bg-system-black bg-opacity-80 ${className}`}
+      className={`overflow-clip relative flex items-center justify-center ${
+        !src ? "bg-system-black" : ""
+      } bg-opacity-80 ${className}`}
     >
       {src ? (
         <img

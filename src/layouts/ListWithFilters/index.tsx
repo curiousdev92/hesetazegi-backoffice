@@ -1,5 +1,4 @@
 import Pagination from "@src/components/Pagination";
-import Spinner from "@src/components/Spinner";
 import Tabs from "@src/components/Tabs";
 import TextField from "@src/components/Textfield";
 import { FC, ReactNode } from "react";
@@ -10,10 +9,10 @@ type PropTypes = {
   tabItems: TabItem[];
   sortComponent: ReactNode;
   total?: number;
-  items: ReactNode[];
   filters: ReactNode[];
   limit: number;
-  loading: boolean;
+  onTabChange?: (key?: TabItem["key"]) => void;
+  children: ReactNode;
 };
 
 const ListWithFiltersLayout: FC<PropTypes> = (props) => {
@@ -23,21 +22,24 @@ const ListWithFiltersLayout: FC<PropTypes> = (props) => {
     title,
     sortComponent,
     total,
-    items,
     limit,
-    loading,
+    onTabChange,
+    children,
+    filters,
   } = props;
 
   return (
     <section className="flex h-full">
       {/* Filters */}
-      <aside className="border-e border-border-secondary min-w-[272px]">
-        <header className="p-6 border-b border-border-secondary text-label-primary text-title-sm">
-          {filterTitle}
-        </header>
-        <div className="flex flex-col gap-3 py-3"></div>
-        {/** @todo Pass filter items from props */}
-      </aside>
+      {filters?.length ? (
+        <aside className="border-e border-border-secondary min-w-[272px]">
+          <header className="p-6 border-b border-border-secondary text-label-primary text-title-sm">
+            {filterTitle}
+          </header>
+          <div className="flex flex-col gap-3 py-3">{filters}</div>
+          {/** @todo Pass filter items from props */}
+        </aside>
+      ) : null}
 
       {/* Main Content */}
       <div className="flex flex-col grow">
@@ -52,7 +54,7 @@ const ListWithFiltersLayout: FC<PropTypes> = (props) => {
                 type={"text"}
                 startIcon="search-normal"
                 placeholder="جستجو دستورپخت..."
-                clear /** @todo This prop doesn't work properly */
+                clear /** @bug This prop doesn't work properly */
               />
             </div>
             {/* Action Button */}
@@ -61,7 +63,7 @@ const ListWithFiltersLayout: FC<PropTypes> = (props) => {
           <div className="flex">
             {/* Tabs */}
             <div className="grow px-4">
-              <Tabs items={tabItems} /> {/** @todo Add onTabChange */}
+              <Tabs items={tabItems} onTabChange={onTabChange} />
             </div>
 
             {/* Sort Dropdown */}
@@ -69,13 +71,23 @@ const ListWithFiltersLayout: FC<PropTypes> = (props) => {
           </div>
         </header>
         <div className="overflow-auto h-full max-h-full flex flex-col">
-          {loading ? (
+          {children}
+          {/* {loading ? (
             <div className="grid place-items-center h-full">
               <Spinner size="m" />
             </div>
+          ) : items.length === 0 ? (
+            <div className="grid place-items-center h-full">
+              <EmptyState
+                className="self-center"
+                size={"l"}
+                description={"داده ای برای نمایش وجود ندارد"}
+                imgSrc={EmptyStateImage}
+              />
+            </div>
           ) : (
             items
-          )}
+          )} */}
         </div>
         <footer className="sticky bottom-0 bg-content-primary p-4 border-t border-border-secondary">
           {total ? <Pagination total={total} limit={limit} /> : null}

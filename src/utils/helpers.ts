@@ -13,3 +13,9 @@ export const localizeDigit = (num: number, loc: LocalesType = "fa") => {
     useGrouping: false,
   });
 };
+
+export const updateURLParams = (key: string, value: string) => {
+  const params = new URLSearchParams(location.search);
+  params.set(key, value);
+  return `${location.pathname}?${params.toString()}`;
+};

@@ -86,7 +86,7 @@ const ItemRow: FC<PropTypes> = (props) => {
               </span>
             ) : null}
           </div>
-          <p>{data.title}</p>
+          <p className="text-label-primary text-body-md">{data.title}</p>
         </div>
         <div className="w-[72px] min-w-fit text-label-secondary text-body-md overflow-x-hidden">
           <span className="group-hover:hidden">
