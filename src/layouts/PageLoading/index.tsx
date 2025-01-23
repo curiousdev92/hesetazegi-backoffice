@@ -1,7 +1,7 @@
 import withBackdrop from "@src/hoc/Backdrop";
 import { motion } from "motion/react";
 
-const HydrateFallbackLayout = () => {
+const PageLoading = () => {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -16,4 +16,4 @@ const HydrateFallbackLayout = () => {
   );
 };
 
-export default withBackdrop(HydrateFallbackLayout);
+export default withBackdrop(PageLoading);
