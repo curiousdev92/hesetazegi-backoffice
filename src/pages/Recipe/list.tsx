@@ -1,34 +1,53 @@
 import EmptyStateImage from "@src/assets/images/empty-state.png";
 import EmptyState from "@src/components/EmptyState";
-
 import Spinner from "@src/components/Spinner";
 import ItemRow from "@src/layouts/ItemRow";
+import { getRecipes } from "@src/services/getRecipes";
 import { useStore } from "@src/store";
-import { FC } from "react";
-import { useLoaderData, useNavigation } from "react-router";
+import { FC, useEffect, useState } from "react";
+import { useSearchParams } from "react-router";
 
 type PropTypes = {};
 type RecipesDataType = { total: number; records: FoodRecipeItem[] };
 
 const RecipeListPage: FC<PropTypes> = () => {
-  const navigation = useNavigation();
   const setTotal = useStore((st) => st.setTotal);
-  const data = useLoaderData() as RecipesDataType;
-  const recipes = data.records.map((r) => ({
-    date: r.creationDate * 1000,
-    title: r.recipeTitle,
-    key: r.foodRecipeKey,
-    image: r.image,
-    isCompeleteContent: r.isCompeleteContent,
-    isCompeleteMedia: r.isCompeleteMedia,
-    isCompeleteSeo: r.isCompeleteSeo,
-    link: "#sample-link" /** @todo change link to dynamic with {r.foodRecipeKey} and {baseURL} */,
-  }));
+  const [searchParams] = useSearchParams();
+  const [loading, setLoading] = useState(true);
+  const [recipes, setRecipes] = useState<any[]>([]);
+  const [error, setError] = useState<unknown>(null);
   const recipesLen = recipes.length;
-  const loading = navigation.state === "loading";
-  setTotal(data.total);
 
-  return loading ? (
+  const fetchRecipes = async (searchParams: URLSearchParams) => {
+    setLoading(true);
+    try {
+      const data: RecipesDataType = await getRecipes(searchParams);
+      setTotal(data.total);
+      const mappedRecipes = data.records.map((r) => ({
+        date: r.creationDate * 1000,
+        title: r.recipeTitle,
+        key: r.foodRecipeKey,
+        image: r.image,
+        isCompeleteContent: r.isCompeleteContent,
+        isCompeleteMedia: r.isCompeleteMedia,
+        isCompeleteSeo: r.isCompeleteSeo,
+        link: "#sample-link" /** @todo change link to dynamic with {r.foodRecipeKey} and {baseURL} */,
+      }));
+      setRecipes(mappedRecipes);
+    } catch (error) {
+      setError(error);
+      throw new Error(error as string);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchRecipes(searchParams);
+  }, [searchParams]);
+
+  return error ? (
+    <div>Error Occured</div>
+  ) : loading ? (
     <div className="grid place-items-center h-full">
       <Spinner size="m" />
     </div>

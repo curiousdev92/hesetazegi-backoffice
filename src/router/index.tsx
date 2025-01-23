@@ -1,5 +1,3 @@
-import ErrorLayout from "@src/layouts/Error";
-import HydrateFallbackLayout from "@src/layouts/HydrateFallback";
 import MainLayout from "@src/layouts/Main";
 import RecipesLayout from "@src/layouts/RecipesLayout";
 import WeblogsLayout from "@src/layouts/WeblogsLayout";
@@ -13,20 +11,18 @@ import RoleManagementPage from "@src/pages/RoleManagement";
 import WeblogListPage from "@src/pages/Weblog/list";
 import ProtectRoutes from "@src/router/protect-routes";
 import { getMenu } from "@src/services/getMenu";
-import { getRecipes } from "@src/services/getRecipes";
-import { getRecipesRequirements } from "@src/services/getRecipesRequirements";
+import { getRecipesStatuses } from "@src/services/getRecipesStatuses";
 import { getWeblogs } from "@src/services/getWeblogs";
 import { getWeblogsRequirements } from "@src/services/getWeblogsRequirements";
+import { Suspense } from "react";
 import { createBrowserRouter, Navigate } from "react-router";
 
 const router = createBrowserRouter([
   {
     element: <ProtectRoutes />,
-    hydrateFallbackElement: <HydrateFallbackLayout />,
     children: [
       {
         element: <MainLayout />,
-        errorElement: <ErrorLayout />,
         loader: getMenu,
         shouldRevalidate: () => false,
         children: [
@@ -35,15 +31,16 @@ const router = createBrowserRouter([
           {
             path: "/recipes",
             element: <RecipesLayout />,
-            loader: getRecipesRequirements,
+            loader: getRecipesStatuses,
             shouldRevalidate: () => false,
-            hydrateFallbackElement: <HydrateFallbackLayout />,
             children: [
               {
                 index: true,
-                element: <RecipeListPage />,
-                loader: getRecipes,
-                shouldRevalidate: () => true,
+                element: (
+                  <Suspense fallback={<p>Loading recipes...</p>}>
+                    <RecipeListPage />
+                  </Suspense>
+                ),
               },
             ],
           },

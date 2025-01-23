@@ -9,9 +9,11 @@ type FoodRecipeItem = {
 };
 
 type RecipesDataType = { total: number; records: FoodRecipeItem[] };
-type recipeStatusesType = {
+
+type recipeStatuseType = {
   code: number;
   count: number;
   isMain: boolean;
   label: string;
-}[];
+};
+type recipeStatusesType = recipeStatuseType[];

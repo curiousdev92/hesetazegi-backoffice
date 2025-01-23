@@ -1,12 +1,10 @@
 import { recipesPageLimit } from "@src/utils/constants";
 import { GET_RECIPE_LIST } from "@src/utils/urls";
-import { LoaderFunctionArgs } from "react-router";
 import { GET } from ".";
 
 const cache = new Map();
 
-export const getRecipes = async ({ request }: LoaderFunctionArgs) => {
-  const { searchParams } = new URL(request.url);
+export const getRecipes = async (searchParams: URLSearchParams) => {
   const page = searchParams.get("page") || 1;
   const sort = searchParams.get("sort");
   const status = searchParams.get("tab") || 200;
