@@ -9,7 +9,7 @@ type PropTypes = {
   tabItems: TabItem[];
   sortComponent: ReactNode;
   total?: number;
-  filters: ReactNode[];
+  filters: ReactNode;
   limit: number;
   onTabChange?: (key?: TabItem["key"]) => void;
   children: ReactNode;
@@ -31,12 +31,12 @@ const ListWithFiltersLayout: FC<PropTypes> = (props) => {
   return (
     <section className="flex h-full">
       {/* Filters */}
-      {filters?.length ? (
+      {filters ? (
         <aside className="border-e border-border-secondary min-w-[272px]">
           <header className="p-6 border-b border-border-secondary text-label-primary text-title-sm">
             {filterTitle}
           </header>
-          <div className="flex flex-col gap-3 py-3">{filters}</div>
+          {filters}
           {/** @todo Pass filter items from props */}
         </aside>
       ) : null}
@@ -72,26 +72,12 @@ const ListWithFiltersLayout: FC<PropTypes> = (props) => {
         </header>
         <div className="overflow-auto h-full max-h-full flex flex-col">
           {children}
-          {/* {loading ? (
-            <div className="grid place-items-center h-full">
-              <Spinner size="m" />
-            </div>
-          ) : items.length === 0 ? (
-            <div className="grid place-items-center h-full">
-              <EmptyState
-                className="self-center"
-                size={"l"}
-                description={"داده ای برای نمایش وجود ندارد"}
-                imgSrc={EmptyStateImage}
-              />
-            </div>
-          ) : (
-            items
-          )} */}
         </div>
-        <footer className="sticky bottom-0 bg-content-primary p-4 border-t border-border-secondary">
-          {total ? <Pagination total={total} limit={limit} /> : null}
-        </footer>
+        {total && total > limit ? (
+          <footer className="sticky bottom-0 bg-content-primary p-4 border-t border-border-secondary">
+            <Pagination total={total} limit={limit} />
+          </footer>
+        ) : null}
       </div>
     </section>
   );
