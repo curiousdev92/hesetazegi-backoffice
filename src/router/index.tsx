@@ -1,4 +1,6 @@
+import ErrorLayout from "@src/layouts/Error";
 import MainLayout from "@src/layouts/Main";
+import PageLoading from "@src/layouts/PageLoading";
 import RecipesLayout from "@src/layouts/RecipesLayout";
 import WeblogsLayout from "@src/layouts/WeblogsLayout";
 import AdminManagementPage from "@src/pages/AdminManagement";
@@ -12,7 +14,6 @@ import WeblogListPage from "@src/pages/Weblog/list";
 import ProtectRoutes from "@src/router/protect-routes";
 import { getMenu } from "@src/services/getMenu";
 import { getRecipesStatuses } from "@src/services/getRecipesStatuses";
-import { getWeblogs } from "@src/services/getWeblogs";
 import { getWeblogsRequirements } from "@src/services/getWeblogsRequirements";
 import { Suspense } from "react";
 import { createBrowserRouter, Navigate } from "react-router";
@@ -20,6 +21,7 @@ import { createBrowserRouter, Navigate } from "react-router";
 const router = createBrowserRouter([
   {
     element: <ProtectRoutes />,
+    HydrateFallback: () => <PageLoading />,
     children: [
       {
         element: <MainLayout />,
@@ -52,8 +54,13 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <WeblogListPage />,
-                loader: getWeblogs,
+                element: (
+                  <ErrorLayout>
+                    <Suspense fallback={<p>Loading weblogs...</p>}>
+                      <WeblogListPage />
+                    </Suspense>
+                  </ErrorLayout>
+                ),
               },
             ],
           },

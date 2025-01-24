@@ -37,8 +37,9 @@ const RecipeListPage: FC<PropTypes> = () => {
     } catch (error) {
       setError(error);
       throw new Error(error as string);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   useEffect(() => {

@@ -2,25 +2,50 @@ import EmptyStateImage from "@src/assets/images/empty-state.png";
 import EmptyState from "@src/components/EmptyState";
 import Spinner from "@src/components/Spinner";
 import ItemRow from "@src/layouts/ItemRow";
-import { FC } from "react";
-import { useLoaderData, useNavigation } from "react-router";
+import { getWeblogs } from "@src/services/getWeblogs";
+import { useStore } from "@src/store";
+import { FC, useEffect, useState } from "react";
+import { useSearchParams } from "react-router";
 
 type PropTypes = {};
+type WeblogsDataType = { total: number; records: WeblogItem[] };
 
 const WeblogListPage: FC<PropTypes> = () => {
-  const navigation = useNavigation();
-  const data = useLoaderData() as { total: number; records: WeblogItem[] };
-  const weblogs = data.records.map((w) => ({
-    date: w.publishedTime,
-    title: w.title,
-    key: w.key,
-    image: w.thumbnail.src,
-    link: "#sample-link" /** @todo change link to dynamic with {w.key} and {baseURL} */,
-  }));
+  const setTotal = useStore((st) => st.setTotal);
+  const [searchParams] = useSearchParams();
+  const [loading, setLoading] = useState(true);
+  const [weblogs, setWeblogs] = useState<any[]>([]);
+  const [error, setError] = useState<unknown>(null);
   const weblogsLen = weblogs.length;
-  const loading = navigation.state === "loading";
 
-  return loading ? (
+  const fetchWeblogs = async (searchParams: URLSearchParams) => {
+    setLoading(true);
+    try {
+      const data: WeblogsDataType = await getWeblogs(searchParams);
+      setTotal(data.total);
+      const mappedWeblogs = data.records.map((w) => ({
+        date: w.publishedTime,
+        title: w.title,
+        key: w.key,
+        image: w.thumbnail.src,
+        link: "#sample-link" /** @todo change link to dynamic with {w.key} and {baseURL} */,
+      }));
+      setWeblogs(mappedWeblogs);
+    } catch (error) {
+      setError(error);
+      throw new Error(error as string);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchWeblogs(searchParams);
+  }, [searchParams]);
+
+  return error ? (
+    <div>Error Occured</div>
+  ) : loading ? (
     <div className="grid place-items-center h-full">
       <Spinner size="m" />
     </div>

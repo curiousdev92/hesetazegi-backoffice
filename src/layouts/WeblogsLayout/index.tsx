@@ -1,12 +1,17 @@
 import PageTransition from "@src/animations/PageTransition";
-import Divider from "@src/components/Divider";
 import DropDown from "@src/components/DropDown";
-import FontIcon from "@src/components/FontIcon";
 import ListWithFiltersLayout from "@src/layouts/ListWithFilters";
+import { useStore } from "@src/store";
 import { weblogsPageLimit } from "@src/utils/constants";
 import { formatNumber, updateURLParams } from "@src/utils/helpers";
-import { FC } from "react";
-import { Outlet, useLoaderData, useNavigate } from "react-router";
+import { FC, MouseEventHandler } from "react";
+import {
+  Outlet,
+  useLoaderData,
+  useNavigate,
+  useSearchParams,
+} from "react-router";
+import CategoriesAccordion from "../ListWithFilters/categories-accordion";
 
 type PropTypes = {};
 
@@ -14,6 +19,9 @@ const WeblogsLayout: FC<PropTypes> = (props) => {
   const {} = props;
   const navigate = useNavigate();
   const categories: WeblogCategoryItem[] = useLoaderData();
+  const total = useStore((st) => st.total);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentSubCat = searchParams.get("CategoryKey");
 
   const tabItems: TabItem[] = [
     { label: "پیش نویس", key: "draft", count: formatNumber(43, "fa") },
@@ -26,18 +34,47 @@ const WeblogsLayout: FC<PropTypes> = (props) => {
     navigate(updateURLParams("sort", item.key));
   };
 
+  const onSubCategoryClick: MouseEventHandler<HTMLLIElement> = (e) => {
+    const { id } = e.currentTarget;
+    setSearchParams((prev) => {
+      prev.set("CategoryKey", id);
+      return prev;
+    });
+  };
+
   return (
     <PageTransition className="h-full">
       <ListWithFiltersLayout
-        filters={categories.map((c) => (
-          <div key={c.key}>
-            <div className="rounded-lg py-2 px-3 flex items-center gap-2 mb-3">
-              <FontIcon icon="arrow-down" />
-              <p className="text-label-primary text-body-md">{c.title}</p>
-            </div>
-            <Divider horizontal="horizontal1" horizontalType="full-width" />
-          </div>
-        ))}
+        filters={
+          <CategoriesAccordion
+            items={categories.map((cat) => ({
+              ...cat,
+              content: cat.categories.map((subCat) => (
+                <li
+                  className={`cursor-pointer ${
+                    subCat.key === currentSubCat
+                      ? "text-label-basePrimary"
+                      : "text-label-primary"
+                  }  text-body-md ms-9 py-2`}
+                  key={subCat.key}
+                  onClick={onSubCategoryClick}
+                  id={subCat.key}
+                >
+                  {subCat.title}
+                </li>
+              )),
+            }))}
+          />
+          //   categories.map((c) => (
+          //   <div key={c.key}>
+          //     <div className="rounded-lg py-2 px-3 flex items-center gap-2 mb-3">
+          //       <FontIcon icon="arrow-down" />
+          //       <p className="text-label-primary text-body-md">{c.title}</p>
+          //     </div>
+          //     <Divider horizontal="horizontal1" horizontalType="full-width" />
+          //   </div>
+          // ))
+        }
         filterTitle="فیلتر و دسته‌بندی" /** @todo change text with translated texts */
         tabItems={tabItems}
         title="لیست مجله" /** @todo change text with translated texts */
@@ -54,7 +91,7 @@ const WeblogsLayout: FC<PropTypes> = (props) => {
             />
           </div>
         }
-        total={5}
+        total={total}
         limit={weblogsPageLimit}
       >
         <Outlet />
