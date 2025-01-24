@@ -60,7 +60,7 @@ const ItemRow: FC<PropTypes> = (props) => {
 
   return (
     <div
-      className={`grow ${
+      className={`w-full ${
         pinned
           ? "order-1 bg-gradient-to-l from-system-pink/10 to-system-white/10"
           : "order-2"
@@ -90,7 +90,7 @@ const ItemRow: FC<PropTypes> = (props) => {
         </div>
         <div className="w-[72px] min-w-fit text-label-secondary text-body-md overflow-x-hidden">
           <span className="group-hover:hidden">
-            {new Date(data.date).toLocaleDateString("fa")}
+            {data.date ? new Date(data.date).toLocaleDateString("fa") : "NA"}
           </span>
           <div
             className="hidden group-hover:grid gap-2 items-center"
