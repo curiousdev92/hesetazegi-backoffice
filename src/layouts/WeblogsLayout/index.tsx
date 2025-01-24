@@ -49,31 +49,26 @@ const WeblogsLayout: FC<PropTypes> = (props) => {
           <CategoriesAccordion
             items={categories.map((cat) => ({
               ...cat,
-              content: cat.categories.map((subCat) => (
-                <li
-                  className={`cursor-pointer ${
-                    subCat.key === currentSubCat
-                      ? "text-label-basePrimary"
-                      : "text-label-primary"
-                  }  text-body-md ms-9 py-2`}
-                  key={subCat.key}
-                  onClick={onSubCategoryClick}
-                  id={subCat.key}
-                >
-                  {subCat.title}
-                </li>
-              )),
+              content: (
+                <ul>
+                  {cat.categories.map((subCat) => (
+                    <li
+                      className={`cursor-pointer ${
+                        subCat.key === currentSubCat
+                          ? "text-label-basePrimary"
+                          : "text-label-primary"
+                      }  text-body-md ms-9 py-2`}
+                      key={subCat.key}
+                      onClick={onSubCategoryClick}
+                      id={subCat.key}
+                    >
+                      {subCat.title}
+                    </li>
+                  ))}
+                </ul>
+              ),
             }))}
           />
-          //   categories.map((c) => (
-          //   <div key={c.key}>
-          //     <div className="rounded-lg py-2 px-3 flex items-center gap-2 mb-3">
-          //       <FontIcon icon="arrow-down" />
-          //       <p className="text-label-primary text-body-md">{c.title}</p>
-          //     </div>
-          //     <Divider horizontal="horizontal1" horizontalType="full-width" />
-          //   </div>
-          // ))
         }
         filterTitle="فیلتر و دسته‌بندی" /** @todo change text with translated texts */
         tabItems={tabItems}

@@ -11,6 +11,7 @@ import {
   useNavigate,
   useSearchParams,
 } from "react-router";
+import RecipesCategories from "./recipes-categories";
 
 type PropTypes = {};
 
@@ -52,7 +53,7 @@ const RecipesLayout: FC<PropTypes> = (props) => {
     <PageTransition className="h-full">
       <ListWithFiltersLayout
         onTabChange={handleTabChange}
-        filters={[]}
+        filters={<RecipesCategories />}
         filterTitle="فیلتر و دسته‌بندی" /** @todo change text with translated texts */
         tabItems={tabItems}
         title="لیست دستور پخت" /** @todo change text with translated texts */

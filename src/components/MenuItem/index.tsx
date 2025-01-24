@@ -78,15 +78,21 @@ export default function MenuItem(props: PropTypes) {
 
       {/* Checkbox start */}
       {checkbox && checkboxPosition === "start" ? (
-        <Checkbox
-          id={uid}
-          name={uid}
-          variant={"square"}
-          data={data}
-          onChange={onCheckbox}
-          checked={checked}
-          defaultChecked={defaultChecked}
-        />
+        <>
+          <label
+            htmlFor={uid}
+            className="absolute left-0 right-0 top-0 bottom-0 cursor-pointer"
+          ></label>
+          <Checkbox
+            id={uid}
+            name={uid}
+            variant={"square"}
+            data={data}
+            onChange={onCheckbox}
+            checked={checked}
+            defaultChecked={defaultChecked}
+          />
+        </>
       ) : null}
 
       {/* Label and SupportingText */}
@@ -109,15 +115,21 @@ export default function MenuItem(props: PropTypes) {
       {/* Checkbox end */}
       <div className="ms-auto flex items-center">
         {checkbox && checkboxPosition === "end" ? (
-          <Checkbox
-            id={uid}
-            name={uid}
-            variant={"square"}
-            data={data}
-            onChange={onCheckbox}
-            checked={checked}
-            defaultChecked={defaultChecked}
-          />
+          <>
+            <label
+              htmlFor={uid}
+              className="absolute left-0 right-0 top-0 bottom-0 cursor-pointer"
+            ></label>
+            <Checkbox
+              id={uid}
+              name={uid}
+              variant={"square"}
+              data={data}
+              onChange={onCheckbox}
+              checked={checked}
+              defaultChecked={defaultChecked}
+            />
+          </>
         ) : null}
       </div>
     </li>

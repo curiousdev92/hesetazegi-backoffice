@@ -13,3 +13,18 @@ export const GET_WEBLOG_LIST = "/api/Weblog/List";
 
 // WeblogCategory
 export const GET_WEBLOG_CATEGORIES = "/api/WeblogCategory/List";
+
+// Meals
+export const MEAL_LIST = "/api/Meal/List";
+
+// Season
+export const SEASON_LIST = "/api/Season/List";
+
+// Difficulty Level
+export const DifficultyLevel_LIST = "/api/DifficultyLevel/List";
+
+// Difficulty Level
+export const TASTE_LIST = "/api/Taste/List";
+
+// Cooking Method
+export const COOKING_METHOD_LIST = "/api/CookingMethod/List";
