@@ -14,7 +14,6 @@ const SkillLevel: FC<PropTypes> = (props) => {
       const meals: DifficultyLevelItem[] = await GET(
         `${DifficultyLevel_LIST}/fa`
       );
-      console.log(meals);
       setItems(meals.map((m) => ({ label: m.title, key: m.key })));
     } catch (error) {}
   };

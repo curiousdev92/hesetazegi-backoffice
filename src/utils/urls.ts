@@ -3,6 +3,7 @@ export const SIGNING = "/api/Admin/Signing";
 
 // Common
 export const GET_MENU = "/api/Common/GetMenu";
+export const GET_PERMISSIONS = "/api/Common/GetPermissions";
 
 // FoodRecipe
 export const GET_RECIPE_LIST = "/api/FoodRecipe/List";

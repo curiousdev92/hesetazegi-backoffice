@@ -11,7 +11,7 @@ export default function MainLayout() {
   const navigation = useNavigation();
   const loading = navigation.state === "loading";
 
-  !menu?.length && setMenu(data);
+  !menu?.length && setMenu(data.menu);
 
   return (
     <div

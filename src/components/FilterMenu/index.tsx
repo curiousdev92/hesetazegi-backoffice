@@ -1,10 +1,11 @@
-import { ChangeEventHandler, FC } from "react";
+import { ChangeEventHandler, FC, UIEventHandler, useState } from "react";
 import { useSearchParams } from "react-router";
 
 type PropTypes = { items: ItemType[] };
 
 const FilterMenu: FC<PropTypes> = (props) => {
   const { items } = props;
+  const [shadow, setShadow] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const filter = searchParams.get("filter") || "";
   const filters = filter ? filter.split(",") : [];
@@ -31,8 +32,20 @@ const FilterMenu: FC<PropTypes> = (props) => {
     setSearchParams(searchParams);
   };
 
+  const handleScrollShadow: UIEventHandler<HTMLUListElement> = (e) => {
+    const { scrollTop } = e.currentTarget;
+    setShadow(scrollTop > 3);
+  };
+
   return (
-    <ul className="flex flex-col gap-1 max-h-44 overflow-auto">
+    <ul
+      className="flex flex-col gap-1 max-h-44 overflow-auto relative"
+      onScroll={handleScrollShadow}
+    >
+      {/* Top Shadow */}
+      {shadow ? (
+        <span className="sticky -top-px h-px left-0 w-full shadow-[0_1px_6px_1px_#0000004d]"></span>
+      ) : null}
       {items.map(({ label, key }) => (
         <label
           key={key}

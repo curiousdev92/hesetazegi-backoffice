@@ -9,9 +9,9 @@ const PageTransition: FC<PropTypes> = (props) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+      initial={{ opacity: 0, filter: "blur(5px)" }}
+      animate={{ opacity: 1, filter: "none" }}
+      exit={{ opacity: 0, filter: "blur(5px)" }}
       transition={{ duration: 0.5, ease: "easeInOut" }}
       className={className}
     >

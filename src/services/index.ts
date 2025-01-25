@@ -2,6 +2,18 @@ import { getCookie } from "@src/utils/cookies";
 
 const token = getCookie("bo-tkn");
 
+const handleStatusCodes = (statusCode: number) => {
+  const statuses: { [key: number]: any } = {
+    401: () => (location.href = "/401"),
+    403: () => (location.href = "/403"),
+  };
+
+  if (statuses[statusCode]) {
+    return statuses[statusCode]();
+  } else {
+  }
+};
+
 const fetchWithAbort = async <T>(
   url: string,
   options?: RequestInit,
@@ -19,17 +31,11 @@ const fetchWithAbort = async <T>(
   try {
     const response = await fetch(url, fetchOptions);
     const parsed = await response.json();
+
     if (parsed?.statusCode === 200) {
       return parsed.data;
     } else {
-      /**
-       * @todo create Error dictionary and use it here
-       */
-      throw new Error(
-        `${parsed?.statusMessage || "Request Failed with Status:"} ${
-          parsed.statusCode || response.status
-        }`
-      );
+      return handleStatusCodes(response.status);
     }
   } catch (error: any) {
     if (error.name === "AbortError") {

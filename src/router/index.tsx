@@ -5,14 +5,17 @@ import RecipesLayout from "@src/layouts/RecipesLayout";
 import WeblogsLayout from "@src/layouts/WeblogsLayout";
 import AdminManagementPage from "@src/pages/AdminManagement";
 import DashboardPage from "@src/pages/Dashboard";
+import ForbiddenPage from "@src/pages/ForbiddenPage";
 import LoginPage from "@src/pages/Login";
 import NotFoundPage from "@src/pages/NotFound";
 import QAPage from "@src/pages/QuestionAnswer";
 import RecipeListPage from "@src/pages/Recipe/list";
 import RoleManagementPage from "@src/pages/RoleManagement";
+import UnAuthorizedPage from "@src/pages/UnAuthorizedPage";
 import WeblogListPage from "@src/pages/Weblog/list";
 import ProtectRoutes from "@src/router/protect-routes";
 import { getMenu } from "@src/services/getMenu";
+import { getPermissions } from "@src/services/getPermissions";
 import { getRecipesStatuses } from "@src/services/getRecipesStatuses";
 import { getWeblogsRequirements } from "@src/services/getWeblogsRequirements";
 import { Suspense } from "react";
@@ -25,7 +28,13 @@ const router = createBrowserRouter([
     children: [
       {
         element: <MainLayout />,
-        loader: getMenu,
+        loader: async () => {
+          const requirements = {
+            menu: await getMenu(),
+            permissions: await getPermissions(),
+          };
+          return requirements;
+        },
         shouldRevalidate: () => false,
         children: [
           { index: true, element: <Navigate to="/dashboard" /> },
@@ -71,6 +80,8 @@ const router = createBrowserRouter([
       },
     ],
   },
+  { path: "/401", element: <UnAuthorizedPage /> },
+  { path: "/403", element: <ForbiddenPage /> },
   { path: "/login", element: <LoginPage /> },
   { path: "*", element: <NotFoundPage /> },
 ]);

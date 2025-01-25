@@ -7,3 +7,11 @@ type MenuEntity = {
   route: string;
   title: string;
 }[];
+
+type ActionsType = "act-modify" | "act-create" | "act-delete" | "act-read";
+
+interface PermissionItemType {
+  key: string;
+  title: string;
+  actions: ActionsType[];
+}

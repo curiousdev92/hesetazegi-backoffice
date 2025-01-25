@@ -12,7 +12,6 @@ const FoodMeal: FC<PropTypes> = (props) => {
   const fetchMeals = async () => {
     try {
       const meals: MealItemType[] = await GET(`${MEAL_LIST}/fa`);
-      console.log(meals);
       setItems(meals.map((m) => ({ label: m.title, key: m.key })));
     } catch (error) {}
   };
