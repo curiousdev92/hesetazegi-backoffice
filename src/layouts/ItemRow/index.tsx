@@ -70,7 +70,7 @@ const ItemRow: FC<PropTypes> = (props) => {
         <div
           className="grow grid gap-6 items-center text-ellipsis"
           style={{
-            gridTemplateColumns: `2.5rem 1fr repeat(${locales.length}, 7.125rem)`,
+            gridTemplateColumns: `2.5rem 1fr repeat(${locales.length}, minmax(0,7.125rem)`,
           }}
         >
           <div className="relative">

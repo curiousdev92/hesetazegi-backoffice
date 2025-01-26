@@ -8,3 +8,5 @@ type TabItem = {
 type LocalesType = "fa" | "en" | "ar";
 
 type ItemType = { label: string; key: string };
+
+type PermissionsMap = Record<string, Set<string>>;

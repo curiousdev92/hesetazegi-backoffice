@@ -29,7 +29,10 @@ const router = createBrowserRouter([
       {
         element: <MainLayout />,
         loader: async () => {
-          const requirements = {
+          const requirements: {
+            menu: MenuEntity;
+            permissions: PermissionItemType[];
+          } = {
             menu: await getMenu(),
             permissions: await getPermissions(),
           };

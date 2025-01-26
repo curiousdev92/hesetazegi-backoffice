@@ -1,7 +1,11 @@
+import { useStore } from "@src/store";
+
 type Permission = { key: string; actions: string[] };
-type PermissionsMap = Record<string, Set<string>>;
 type NormalizeType = (permissions: Permission[]) => PermissionsMap;
-type HasPermFunc = (p: PermissionsMap, k: string, a: string) => boolean;
+type HasPermFunc = (
+  key: string,
+  act: "modify" | "create" | "delete" | "read"
+) => boolean;
 
 export const normalizePermissions: NormalizeType = (permissions) => {
   return permissions.reduce((acc, { key, actions }) => {
@@ -10,6 +14,9 @@ export const normalizePermissions: NormalizeType = (permissions) => {
   }, {} as PermissionsMap);
 };
 
-export const hasPermission: HasPermFunc = (permissionsMap, key, action) => {
-  return permissionsMap[key]?.has(action) ?? false; // Return false if the key doesn't exist
+const permissions = useStore.getState().permissions;
+console.log("############", permissions);
+
+export const hasPermission: HasPermFunc = (key, action) => {
+  return permissions[key]?.has(`act-${action}`) ?? false; // Return false if the key doesn't exist
 };

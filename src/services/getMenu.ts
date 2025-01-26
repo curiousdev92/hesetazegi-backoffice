@@ -2,7 +2,7 @@ import { GET_MENU } from "@src/utils/urls";
 import { GET } from ".";
 
 export const getMenu = async () => {
-  const menu = (await GET(`${GET_MENU}/fa`)) as MenuEntity[];
+  const menu = (await GET(`${GET_MENU}/fa`)) as MenuEntity;
   return [
     ...menu,
     {
@@ -14,5 +14,5 @@ export const getMenu = async () => {
       priority: 998,
       items: null,
     },
-  ];
+  ] as MenuEntity;
 };
