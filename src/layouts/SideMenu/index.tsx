@@ -18,7 +18,9 @@ const SideMenu: FC<PropTypes> = (props) => {
   const navigate = useNavigate();
   const [show, setShow] = useState(true);
   const menu = useStore((st) => st.menu);
+  const status = useStore((st) => st.adminStatus);
   const currentIdx = menu.findIndex((m) => m.route === pathname);
+  const fullName = `${status?.firstname} ${status?.lastname}`;
   const animateClass = show
     ? "grid-cols-[3.5rem_200px]"
     : "grid-cols-[3.5rem_0px]";
@@ -99,16 +101,19 @@ const SideMenu: FC<PropTypes> = (props) => {
 
       {/* Footer */}
       <footer
-        className="row-start-3 col-start-1 col-end-3 text-nowrap overflow-hidden border-t border-[#FFFFFF33] border-opacity-20 flex items-center gap-3 min-w-fit transition-[padding] duration-500"
+        className="row-start-3 col-start-1 col-end-3 border-t border-[#FFFFFF33] border-opacity-20 grid grid-cols-[40px_minmax(20px,1fr)_40px] items-center gap-3 min-w-fit transition-[padding] duration-500"
         style={{ padding: show ? 16 : "1rem .5rem" }}
       >
-        <Avatar img="" size={40} />
+        <Avatar img={status?.avatar} size={40} />
         <div className="grow">
-          <p className="text-label-md text-label-baseWhite mb-1">
-            محمد نادرخانی {/** @todo Replace with translate */}
+          <p
+            className="text-label-md text-label-baseWhite mb-1 text-nowrap text-ellipsis overflow-hidden"
+            title={fullName}
+          >
+            {fullName}
           </p>
           <p className="text-body-sm text-label-quaternary">
-            فرانت کارِ دو عالم {/** @todo Replace with translate */}
+            {status?.position}
           </p>
         </div>
         <IconButton

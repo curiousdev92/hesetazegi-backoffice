@@ -15,7 +15,6 @@ export const normalizePermissions: NormalizeType = (permissions) => {
 };
 
 const permissions = useStore.getState().permissions;
-console.log("############", permissions);
 
 export const hasPermission: HasPermFunc = (key, action) => {
   return permissions[key]?.has(`act-${action}`) ?? false; // Return false if the key doesn't exist

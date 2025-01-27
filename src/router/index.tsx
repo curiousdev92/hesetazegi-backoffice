@@ -1,9 +1,10 @@
+import AdminsLayout from "@src/layouts/AdminsLayout";
 import ErrorLayout from "@src/layouts/Error";
 import MainLayout from "@src/layouts/Main";
 import PageLoading from "@src/layouts/PageLoading";
 import RecipesLayout from "@src/layouts/RecipesLayout";
 import WeblogsLayout from "@src/layouts/WeblogsLayout";
-import AdminManagementPage from "@src/pages/AdminManagement";
+import AdminsPage from "@src/pages/Admins/list";
 import DashboardPage from "@src/pages/Dashboard";
 import ForbiddenPage from "@src/pages/ForbiddenPage";
 import LoginPage from "@src/pages/Login";
@@ -14,8 +15,7 @@ import RoleManagementPage from "@src/pages/RoleManagement";
 import UnAuthorizedPage from "@src/pages/UnAuthorizedPage";
 import WeblogListPage from "@src/pages/Weblog/list";
 import ProtectRoutes from "@src/router/protect-routes";
-import { getMenu } from "@src/services/getMenu";
-import { getPermissions } from "@src/services/getPermissions";
+import { getInitData } from "@src/services/getinitData";
 import { getRecipesStatuses } from "@src/services/getRecipesStatuses";
 import { getWeblogsRequirements } from "@src/services/getWeblogsRequirements";
 import { Suspense } from "react";
@@ -28,16 +28,7 @@ const router = createBrowserRouter([
     children: [
       {
         element: <MainLayout />,
-        loader: async () => {
-          const requirements: {
-            menu: MenuEntity;
-            permissions: PermissionItemType[];
-          } = {
-            menu: await getMenu(),
-            permissions: await getPermissions(),
-          };
-          return requirements;
-        },
+        loader: getInitData,
         shouldRevalidate: () => false,
         children: [
           { index: true, element: <Navigate to="/dashboard" /> },
@@ -77,7 +68,21 @@ const router = createBrowserRouter([
             ],
           },
           { path: "/qa", element: <QAPage /> },
-          { path: "/admin-management", element: <AdminManagementPage /> },
+          {
+            path: "/admin-management",
+            element: <AdminsLayout />,
+            shouldRevalidate: () => false,
+            children: [
+              {
+                index: true,
+                element: (
+                  <Suspense>
+                    <AdminsPage />
+                  </Suspense>
+                ),
+              },
+            ],
+          },
           { path: "/role-management", element: <RoleManagementPage /> },
         ],
       },

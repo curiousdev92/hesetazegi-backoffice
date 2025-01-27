@@ -22,6 +22,7 @@ const WeblogListPage: FC<PropTypes> = () => {
     setLoading(true);
     try {
       const data: WeblogsDataType = await getWeblogs(searchParams);
+      console.log(data);
       setTotal(data.total);
       const mappedWeblogs = data.records.map((w) => ({
         date: w.publishedTime,

@@ -51,7 +51,7 @@ const GET = async <T>(
   controller?: AbortController,
   unAuth?: boolean
 ): Promise<T> => {
-  return fetchWithAbort(
+  return await fetchWithAbort(
     url,
     {
       headers: {

@@ -5,11 +5,11 @@ import { FC, ReactNode } from "react";
 
 type PropTypes = {
   title: string;
-  filterTitle: string;
+  filterTitle?: string;
   tabItems: TabItem[];
-  sortComponent: ReactNode;
+  sortComponent?: ReactNode;
   total?: number;
-  filters: ReactNode;
+  filters?: ReactNode;
   limit: number;
   onTabChange?: (key?: TabItem["key"]) => void;
   children: ReactNode;
@@ -63,11 +63,15 @@ const ListWithFiltersLayout: FC<PropTypes> = (props) => {
           <div className="flex">
             {/* Tabs */}
             <div className="grow px-4">
-              <Tabs items={tabItems} onTabChange={onTabChange} />
+              {tabItems?.length ? (
+                <Tabs items={tabItems} onTabChange={onTabChange} />
+              ) : null}
             </div>
 
             {/* Sort Dropdown */}
-            <div className="py-2 px-4">{sortComponent}</div>
+            {sortComponent ? (
+              <div className="py-2 px-4">{sortComponent}</div>
+            ) : null}
           </div>
         </header>
         <div className="overflow-auto h-full max-h-full flex flex-col">

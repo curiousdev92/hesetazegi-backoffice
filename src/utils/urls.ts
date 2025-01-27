@@ -1,5 +1,6 @@
 // Admin
 export const SIGNING = "/api/Admin/Signing";
+export const GET_ADMIN_STATUS = "/api/Admin/Status";
 
 // Common
 export const GET_MENU = "/api/Common/GetMenu";
