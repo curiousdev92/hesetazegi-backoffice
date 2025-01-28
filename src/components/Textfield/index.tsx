@@ -1,209 +1,132 @@
-"use client";
-
-import {
-  ChangeEvent,
-  ChangeEventHandler,
-  HTMLInputTypeAttribute,
-  KeyboardEventHandler,
-  useRef,
-} from "react";
-import Avatar from "../Avatar";
-import Divider from "../Divider";
+import { ChangeEvent, FC, ReactNode } from "react";
 import FontIcon from "../FontIcon";
 
-interface PropTypes {
-  id: string;
-  size: "s" | "m" | "l";
+interface TextFieldProps {
+  size?: "small" | "medium" | "large";
+  state?: "default" | "error" | "success" | "disabled";
   label?: string;
-  content?: string;
+  placeholder?: string;
   supportingText?: string;
   startIcon?: string;
+  avatar?: ReactNode;
   endIcon?: string;
-  avatar?: string;
-  clear?: boolean;
-  placeholder?: string;
-  disabled?: boolean;
-  success?: boolean;
-  error?: boolean;
-  name?: string;
+  content?: ReactNode;
   value?: string;
-  onChange?: ChangeEventHandler<HTMLInputElement>;
-  defaultValue?: string;
-  type: HTMLInputTypeAttribute;
-  onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
-  align?: "center" | "start";
-  required?: boolean;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
+  center?: boolean;
+  readOnly?: boolean;
 }
 
-export default function TextField(props: PropTypes) {
+export const TextField: FC<TextFieldProps> = (props) => {
   const {
-    id,
-    size,
+    size = "medium",
+    state = "default",
     label,
-    content,
+    placeholder,
     supportingText,
     startIcon,
-    endIcon,
     avatar,
-    clear,
-    placeholder,
-    disabled,
-    success,
-    error,
-    name,
+    endIcon,
+    content,
     value,
     onChange,
-    defaultValue,
-    type = "text",
-    onKeyDown,
-    align,
-    required,
+    disabled = false,
+    center,
+    readOnly,
   } = props;
-  const inputRef = useRef<HTMLInputElement>(null);
 
-  const inputStyles = {
-    s: "py-1.5 px-2 rounded-lg text-body-md",
-    m: "py-2.5 px-3 rounded-xl text-body-md",
-    l: "py-3 px-4 rounded-2xl text-body-lg",
+  const sizeClasses = {
+    small: "py-1.5 px-2 text-body-md rounded-lg h-8",
+    medium: "py-2.5 px-3 text-body-md rounded-xl h-10",
+    large: "py-3 px-4 text-body-lg rounded-2xl h-12",
   };
 
-  const labelStyles = {
-    s: "text-label-md",
-    m: "text-label-md",
-    l: "text-label-lg",
+  const stateClasses = {
+    default: "border-border-secondary",
+    error: "border-system-danger",
+    success: "border-system-success",
+    disabled: "opacity-50 cursor-not-allowed",
   };
 
-  const borderStyles = {
-    s: "rounded-lg",
-    m: "rounded-xl",
-    l: "rounded-2xl",
-  };
-
-  const contentStyles = {
-    s: "ps-2 text-body-sm",
-    m: "ps-3 text-body-sm",
-    l: "ps-4 text-body-md",
-  };
-
-  function clearText() {
-    inputRef.current && (inputRef.current.value = "");
-  }
-
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
-    onChange && onChange(e);
-  }
+  const interactionClasses = disabled
+    ? stateClasses.disabled
+    : `${stateClasses[state]} focus-within:border-border-basePrimary`;
 
   return (
-    <label
-      htmlFor={id}
-      className={`flex flex-col text-label-primary grow relative z-[1] ${
-        disabled ? "opacity-50" : ""
-      }`}
-    >
+    <div className="flex flex-col w-full">
       {/* Label */}
-      {label ? (
-        <span className={`mb-2 ${labelStyles[size]}`}>{label}</span>
-      ) : null}
-
-      {/* Input & Actions */}
-      <div className={`flex items-center gap-2 relative ${inputStyles[size]}`}>
-        {startIcon ? (
+      {label && (
+        <label
+          className="mb-2 text-label-primary"
+          htmlFor={label.replace(/\s+/g, "-").toLowerCase()}
+        >
+          {label}
+        </label>
+      )}
+      {/* Input Container */}
+      <div
+        className={`relative flex items-center border transition group ${sizeClasses[size]} ${interactionClasses}`}
+      >
+        {/* Start Icon */}
+        {startIcon && (
           <FontIcon
             icon={startIcon}
             className={`text-label-tertiary ${
-              size === "l" ? "text-[1.5rem] w-6" : "text-[1.25rem] w-5"
-            }`}
+              size === "large" ? "text-2xl h-6" : "text-xl h-5"
+            } ${size === "small" ? "me-1" : "me-2"}`}
           />
-        ) : null}
+        )}
 
+        {/* Input */}
         <input
-          type={type}
-          id={id}
-          className={`bg-transparent grow peer ${
-            align === "center" ? "text-center" : ""
-          }`}
-          ref={inputRef}
+          id={label?.replace(/\s+/g, "-").toLowerCase()}
+          type="text"
+          value={value}
+          onChange={onChange}
           placeholder={placeholder}
           disabled={disabled}
-          name={name}
-          value={value}
-          onChange={handleChange}
-          onKeyDown={onKeyDown}
-          defaultValue={defaultValue}
-          required={required}
-        />
-        <div
-          className={`absolute left-0 w-full h-full ring-[1.3px] ${
-            success
-              ? "ring-border-basePrimary"
-              : error
-              ? "ring-system-danger"
-              : "ring-border-secondary peer-focus:ring-border-basePrimary"
-          } ring-inset transition bg-system-white peer-hover:bg-gray-50 -z-[1] peer-disabled:peer-hover:bg-transparent ${
-            borderStyles[size]
+          className={`w-full bg-transparent outline-none me-2 ${
+            center ? "text-center" : ""
           }`}
-        ></div>
-
-        <div className="flex gap-2 items-center peer-placeholder-shown:[&>button]:invisible peer-placeholder-shown:[&>button]:opacity-0">
-          {avatar ? (
-            <Avatar size={size === "l" ? 24 : 20} img={avatar} />
-          ) : null}
-
-          <button
-            type="button"
-            onClick={clear ? clearText : undefined}
-            className="flex transition-[opacity,visibility,transform] duration-300"
-          >
-            {clear && inputRef?.current?.value ? (
-              <FontIcon
-                icon="close"
-                className={
-                  size === "l" ? "text-[1.5rem] w-6" : "text-[1.25rem] w-5"
-                }
-              />
-            ) : null}
-            {success || error ? (
-              <FontIcon
-                icon={success ? "tick-circle-bold" : error ? "info-bold" : ""}
-                className={`${
-                  success
-                    ? "text-border-basePrimary"
-                    : error
-                    ? "text-system-danger"
-                    : ""
-                } ${size === "l" ? "text-[1.5rem] w-6" : "text-[1.25rem] w-5"}`}
-              />
-            ) : null}
-          </button>
-
-          {/* Size=Small (32px), State=Enabled, Type=Placeholder RIght */}
-          {content ? (
-            <div className={`flex relative ${contentStyles[size]}`}>
-              <Divider
-                vertical="vertical2"
-                verticalType="middle-inset"
-                className={"absolute right-0 top-1/2 -translate-y-1/2"}
-              />
-              {content}
-            </div>
-          ) : null}
+          aria-invalid={state === "error"}
+          aria-describedby={
+            supportingText
+              ? `${label?.replace(/\s+/g, "-").toLowerCase()}-description`
+              : undefined
+          }
+          readOnly={readOnly}
+        />
+        {/* Content/Avatar/End Icon */}
+        <div className="flex items-center gap-2">
+          {avatar && <div className="">{avatar}</div>}
+          {endIcon && (
+            <FontIcon
+              icon={endIcon}
+              className={`text-label-tertiary ${
+                size === "large" ? "text-2xl h-6" : "text-xl h-5"
+              }`}
+            />
+          )}
+          {content && (
+            <>
+              <div className="border-l border-border-secondary h-4" />
+              <span className="text-label-primary">{content}</span>
+            </>
+          )}
         </div>
       </div>
-
       {/* Supporting Text */}
-      {supportingText ? (
+      {supportingText && (
         <span
-          className={`pt-1 text-body-sm ${
-            success
-              ? "text-border-basePrimary"
-              : error
-              ? "text-system-danger"
-              : "text-label-secondary"
-          } ${size === "s" ? "px-2" : "px-3"}`}
+          id={`${label?.replace(/\s+/g, "-").toLowerCase()}-description`}
+          className="mt-1 text-sm text-label-tertiary"
         >
           {supportingText}
         </span>
-      ) : null}
-    </label>
+      )}
+    </div>
   );
-}
+};
+
+export default TextField;

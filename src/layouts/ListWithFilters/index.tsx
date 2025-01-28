@@ -47,15 +47,16 @@ const ListWithFiltersLayout: FC<PropTypes> = (props) => {
           <div className="mb-3 px-4 justify-between flex w-full">
             <div className="flex gap-4 items-center">
               {/* Title */}
-              <p className="text-label-primary text-title-md">{title}</p>
-              <TextField
-                id={"main-searchbar"}
-                size={"m"}
-                type={"text"}
-                startIcon="search-normal"
-                placeholder="جستجو دستورپخت..."
-                clear /** @bug This prop doesn't work properly */
-              />
+              <p className="text-label-primary text-title-md text-nowrap">
+                {title}
+              </p>
+              <div className="w-96 max-w-full">
+                <TextField
+                  placeholder="جستجو دستورپخت..."
+                  size="medium"
+                  startIcon={"search-normal"}
+                />
+              </div>
             </div>
             {/* Action Button */}
             <button>دستور پخت جدید</button> {/** @todo Change with translate */}
