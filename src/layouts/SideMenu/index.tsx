@@ -48,7 +48,7 @@ const SideMenu: FC<PropTypes> = (props) => {
 
   return (
     <aside
-      className={`grid grid-flow-row grid-rows-[5rem_1fr_76px] overflow-hidden transition-[grid-template-columns] duration-500 text-label-baseWhite bg-primary-800 ${animateClass}`}
+      className={`grid grid-flow-row grid-rows-[5rem_1fr_76px] overflow-hidden transition-[grid-template-columns] duration-300 text-label-baseWhite bg-primary-800 ${animateClass}`}
     >
       {/* Top gradient */}
       <div className="col-start-1 col-end-3 row-start-1 bg-gradient-to-l from-[#99A41B] to-system-primary border-b border-border-quaternary"></div>
@@ -68,25 +68,30 @@ const SideMenu: FC<PropTypes> = (props) => {
       {/* Content - Dynamic Menu */}
       <ul className="row-start-2 col-start-1 col-end-3 relative overflow-hidden text-nowrap py-4 flex flex-col gap-2 z-[1]">
         {menu.map((item) => (
-          <button
-            key={item.key}
-            onClick={handleClick}
-            id={item.route}
-            className={`hover:bg-primary-700 ${
-              item.route === pathname
-                ? "text-system-yellow bg-primary-700"
-                : "text-label-baseWhite"
-            }`}
-          >
-            <li className="py-3 px-4 flex gap-4">
+          <li key={item.key}>
+            <button
+              onClick={handleClick}
+              id={item.route}
+              className={`w-full py-3 px-4 flex gap-4 hover:bg-primary-700 ${
+                item.route === pathname
+                  ? "text-system-yellow bg-primary-700"
+                  : "text-label-baseWhite"
+              }`}
+            >
               <SVGElement
                 fillColor={item.route === pathname ? "#fff500" : "white"}
               >
                 {icons[item.key]}
               </SVGElement>
-              {item.title}
-            </li>
-          </button>
+              <span
+                className={`transition-[opacity,visibility] duration-500 ${
+                  show ? "delay-200 opacity-100 visible" : "opacity-0 invisible"
+                }`}
+              >
+                {item.title}
+              </span>
+            </button>
+          </li>
         ))}
 
         {/* Yellow Indicator */}
