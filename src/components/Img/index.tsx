@@ -1,3 +1,6 @@
+import NoImage from "@src/assets/images/no-image.svg";
+import { ReactEventHandler } from "react";
+
 interface PropType {
   src: string;
   alt?: string;
@@ -33,8 +36,11 @@ interface PropType {
     | [1, 2]
     | [9, 21];
 }
+
 export default function Img({ src, alt, ratio, height, className }: PropType) {
-  //   const paddingBottom = `${(1 / (ratio[0] / ratio[1])) * width}px`;
+  const handleError: ReactEventHandler<HTMLImageElement> = (e) => {
+    e.currentTarget.src = NoImage;
+  };
 
   return (
     <div
@@ -42,20 +48,15 @@ export default function Img({ src, alt, ratio, height, className }: PropType) {
         height: height,
         width: (height * ratio[0]) / ratio[1],
       }}
-      className={`overflow-clip relative flex items-center justify-center ${
-        !src ? "bg-system-black" : ""
-      } bg-opacity-80 ${className}`}
+      className={`overflow-clip relative flex items-center justify-center bg-opacity-80 ${className}`}
     >
-      {src ? (
-        <img
-          src={src}
-          alt={alt}
-          className="object-cover w-full h-full"
-          loading="lazy"
-        />
-      ) : (
-        <span className="absolute h-[200%] w-0.5 bg-border-primary rotate-45 origin-center"></span>
-      )}
+      <img
+        src={src || NoImage}
+        alt={alt}
+        className="object-cover w-full h-full"
+        loading="lazy"
+        onError={handleError}
+      />
     </div>
   );
 }

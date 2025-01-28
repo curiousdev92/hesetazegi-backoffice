@@ -1,4 +1,4 @@
-import Img from "../Images";
+import Img from "../Img";
 
 interface PropType {
   size: "s" | "m" | "l" | "xl";

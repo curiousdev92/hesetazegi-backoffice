@@ -1,5 +1,5 @@
 import FontIcon from "../FontIcon";
-import Img from "../Images";
+import Img from "../Img";
 
 interface AvatarPrps {
   img?: string;

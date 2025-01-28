@@ -1,6 +1,6 @@
 import Divider from "@src/components/Divider";
 import FontIcon from "@src/components/FontIcon";
-import Img from "@src/components/Images";
+import Img from "@src/components/Img";
 import { FC, MouseEventHandler, useState } from "react";
 
 type actionType = "edit" | "delete" | "copy" | "pin";
