@@ -112,7 +112,7 @@ const SideMenu: FC<PropTypes> = (props) => {
           >
             {fullName}
           </p>
-          <p className="text-body-sm text-label-quaternary">
+          <p className="text-body-sm text-label-quaternary text-nowrap text-ellipsis overflow-hidden">
             {status?.position}
           </p>
         </div>
