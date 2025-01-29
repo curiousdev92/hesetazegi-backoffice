@@ -4,7 +4,7 @@ import MainLayout from "@src/layouts/Main";
 import PageLoading from "@src/layouts/PageLoading";
 import RecipesLayout from "@src/layouts/RecipesLayout";
 import WeblogsLayout from "@src/layouts/WeblogsLayout";
-import AdminsPage from "@src/pages/Admins/list";
+import AdminListPage from "@src/pages/Admins/list";
 import DashboardPage from "@src/pages/Dashboard";
 import ForbiddenPage from "@src/pages/ForbiddenPage";
 import LoginPage from "@src/pages/Login";
@@ -15,6 +15,7 @@ import RoleManagementPage from "@src/pages/RoleManagement";
 import UnAuthorizedPage from "@src/pages/UnAuthorizedPage";
 import WeblogListPage from "@src/pages/Weblog/list";
 import ProtectRoutes from "@src/router/protect-routes";
+import { getAdminList } from "@src/services/getAdminList";
 import { getInitData } from "@src/services/getinitData";
 import { getRecipesStatuses } from "@src/services/getRecipesStatuses";
 import { getWeblogsRequirements } from "@src/services/getWeblogsRequirements";
@@ -75,9 +76,10 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
+                loader: getAdminList,
                 element: (
                   <Suspense>
-                    <AdminsPage />
+                    <AdminListPage />
                   </Suspense>
                 ),
               },
