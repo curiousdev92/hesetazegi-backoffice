@@ -15,7 +15,6 @@ const AdminsLayout: FC<PropTypes> = () => {
         title="مدیریت مدیران" /** @todo change text with translated texts */
         total={30}
         limit={weblogsPageLimit}
-        // tableHeaders={}
       >
         <Outlet />
       </ListWithFiltersLayout>

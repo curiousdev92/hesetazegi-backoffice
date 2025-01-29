@@ -48,7 +48,7 @@ export default function EmptyState({
         <Img
           src={imgSrc}
           ratio={[1, 1]}
-          height={
+          size={
             size === "xl" ? 248 : size === "l" ? 144 : size === "m" ? 64 : 24
           }
           className="rounded-lg"

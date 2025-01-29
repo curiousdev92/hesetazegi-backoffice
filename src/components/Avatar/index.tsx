@@ -59,7 +59,7 @@ export default function Avatar({
           src={img}
           alt={alt}
           className="absolute left-0 top-0 bottom-0 right-0 rounded-full"
-          height={sizes[size].height}
+          size={sizes[size].height}
           ratio={[1, 1]}
         />
       ) : (

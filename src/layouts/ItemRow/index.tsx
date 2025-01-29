@@ -76,7 +76,7 @@ const ItemRow: FC<PropTypes> = (props) => {
           <div className="relative">
             <Img
               src={data.image}
-              height={40}
+              size={40}
               ratio={[1, 1]}
               className="rounded"
             />

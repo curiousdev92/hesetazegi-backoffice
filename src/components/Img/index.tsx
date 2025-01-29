@@ -4,7 +4,7 @@ import { ReactEventHandler } from "react";
 interface PropType {
   src: string;
   alt?: string;
-  height: number;
+  size: number;
   className?: string;
   ratio:
     | [1, 1]
@@ -37,7 +37,7 @@ interface PropType {
     | [9, 21];
 }
 
-export default function Img({ src, alt, ratio, height, className }: PropType) {
+export default function Img({ src, alt, ratio, size, className }: PropType) {
   const handleError: ReactEventHandler<HTMLImageElement> = (e) => {
     e.currentTarget.src = NoImage;
   };
@@ -45,8 +45,8 @@ export default function Img({ src, alt, ratio, height, className }: PropType) {
   return (
     <div
       style={{
-        height: height,
-        width: (height * ratio[0]) / ratio[1],
+        height: size,
+        width: (size * ratio[0]) / ratio[1],
       }}
       className={`overflow-clip relative flex items-center justify-center bg-opacity-80 ${className}`}
     >
