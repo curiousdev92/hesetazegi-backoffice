@@ -23,10 +23,12 @@ const ItemRow: FC<PropTypes> = (props) => {
     pin: "pin",
   };
   const actionColors = {
-    edit: "hover:text-label-basePrimary",
-    delete: "hover:text-system-danger",
-    copy: "hover:text-system-blue",
-    pin: "hover:text-system-danger",
+    edit: "bg-system-white text-label-primary hover:text-label-basePrimary",
+    delete: "bg-system-white text-label-primary hover:text-system-danger",
+    copy: "bg-system-white text-label-primary hover:text-system-blue",
+    pin: pinned
+      ? "bg-system-secondary text-system-white"
+      : "bg-system-white text-label-primary hover:text-system-secondary",
   };
 
   const onActionClick: MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -62,7 +64,7 @@ const ItemRow: FC<PropTypes> = (props) => {
     <div
       className={`w-full ${
         pinned
-          ? "order-1 bg-gradient-to-l from-system-pink/10 to-system-white/10"
+          ? "order-1 bg-gradient-to-l from-system-secondary/10 to-system-white/10"
           : "order-2"
       }`}
     >
@@ -81,7 +83,7 @@ const ItemRow: FC<PropTypes> = (props) => {
               className="rounded"
             />
             {pinned ? (
-              <span className="bg-system-danger text-label-baseWhite absolute -top-0.5 -left-0.5 shadow-[0_0_0_1.5px_white] rounded-full p-1">
+              <span className="bg-system-secondary text-label-baseWhite absolute -top-0.5 -left-0.5 shadow-[0_0_0_1.5px_white] rounded-full p-1">
                 <FontIcon icon="pin" className="text-[10px]" />
               </span>
             ) : null}
@@ -100,12 +102,14 @@ const ItemRow: FC<PropTypes> = (props) => {
               <button
                 key={action}
                 id={action}
-                className={`border border-border-secondary rounded-lg p-1 bg-system-white text-label-primary ${actionColors[action]}`}
+                className={`border border-border-secondary rounded-lg p-1 ${actionColors[action]}`}
                 onClick={onActionClick}
               >
                 <FontIcon
                   icon={actionIcons[action]}
-                  className="text-xl w-5 h-5"
+                  className={`text-xl w-5 h-5 ${
+                    pinned && action === "pin" ? "-rotate-45" : ""
+                  }`}
                 />
               </button>
             ))}

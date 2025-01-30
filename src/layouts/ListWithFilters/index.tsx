@@ -13,6 +13,9 @@ type PropTypes = {
   limit: number;
   onTabChange?: (key?: TabItem["key"]) => void;
   children: ReactNode;
+  searchbar?: boolean;
+  searchbarPlaceholder?: string;
+  actionButton?: ReactNode;
 };
 
 const ListWithFiltersLayout: FC<PropTypes> = (props) => {
@@ -26,6 +29,9 @@ const ListWithFiltersLayout: FC<PropTypes> = (props) => {
     onTabChange,
     children,
     filters,
+    searchbar = true,
+    searchbarPlaceholder,
+    actionButton,
   } = props;
 
   return (
@@ -50,16 +56,18 @@ const ListWithFiltersLayout: FC<PropTypes> = (props) => {
               <p className="text-label-primary text-title-md text-nowrap">
                 {title}
               </p>
-              <div className="w-96 max-w-full">
-                <TextField
-                  placeholder="جستجو دستورپخت..."
-                  size="medium"
-                  startIcon={"search-normal"}
-                />
-              </div>
+              {searchbar ? (
+                <div className="w-96 max-w-full">
+                  <TextField
+                    placeholder={searchbarPlaceholder}
+                    size="medium"
+                    startIcon={"search-normal"}
+                  />
+                </div>
+              ) : null}
             </div>
             {/* Action Button */}
-            <button>دستور پخت جدید</button> {/** @todo Change with translate */}
+            {actionButton ? actionButton : null}
           </div>
           <div className="flex">
             {/* Tabs */}

@@ -60,6 +60,7 @@ const RecipesLayout: FC<PropTypes> = (props) => {
         sortComponent={renderSource}
         total={total}
         limit={weblogsPageLimit}
+        searchbarPlaceholder="جستجو دستورپخت..."
       >
         <Outlet />
       </ListWithFiltersLayout>
