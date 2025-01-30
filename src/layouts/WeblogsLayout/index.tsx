@@ -88,6 +88,7 @@ const WeblogsLayout: FC<PropTypes> = (props) => {
         }
         total={total}
         limit={weblogsPageLimit}
+        searchbarPlaceholder="جستجو مجله..."
       >
         <Outlet />
       </ListWithFiltersLayout>

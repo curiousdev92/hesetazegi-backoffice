@@ -1,10 +1,11 @@
+import { ReactNode } from "react";
 import Spinner from "../Spinner";
 
 interface PropType {
   size: "s" | "m" | "l" | "xl";
   variant: "filled" | "tonal" | "outline" | "dashed" | "texted";
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  label?: any;
+  label?: ReactNode;
   type?: "button" | "submit" | "reset";
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
@@ -41,7 +42,7 @@ export default function Button({
   ...rest
 }: PropType) {
   const sizeClasses = {
-    s: `rounded text-body-sm gap-0.5 ${
+    s: `h-6 rounded text-body-sm gap-0.5 ${
       startIcon
         ? "ps-1 pe-2 py-1"
         : endIcon
@@ -50,7 +51,7 @@ export default function Button({
         ? "p-0.5"
         : "px-2 py-1"
     }`,
-    m: `rounded-lg text-body-md gap-1 ${
+    m: `h-8 rounded-lg text-body-md gap-1 ${
       startIcon
         ? "ps-1 pe-2 py-1.5"
         : endIcon
@@ -59,7 +60,7 @@ export default function Button({
         ? "p-1.5"
         : "px-3 py-1.5"
     }`,
-    l: `rounded-xl text-body-md gap-2 ${
+    l: `h-10 rounded-xl text-body-md gap-2 ${
       startIcon
         ? "ps-2 pe-3 py-2.5"
         : endIcon
@@ -68,7 +69,7 @@ export default function Button({
         ? "p-2.5"
         : "px-5 py-2.5"
     }`,
-    xl: `rounded-2xl text-body-lg gap-2 ${
+    xl: `h-12 rounded-2xl text-body-lg gap-2 ${
       startIcon
         ? "py-3 ps-3 pe-4"
         : endIcon
