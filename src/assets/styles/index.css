@@ -7,6 +7,10 @@
   src: url("/src/assets/fonts/IRANYekanXVF.woff2");
 }
 
+:root {
+  --direction: rtl;
+}
+
 body {
   font-family: IranYekan;
   position: fixed;
@@ -15,6 +19,7 @@ body {
   top: 0;
   right: 0;
   overflow: clip;
+  direction: var(--direction);
 }
 
 #root {

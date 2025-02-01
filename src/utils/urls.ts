@@ -1,7 +1,11 @@
+export const BASE_URL_UPLOAD = "https://uploader.hesetazegi.com/";
+
 // Admin
 export const SIGNING = "/api/Admin/Signing";
 export const GET_ADMIN_STATUS = "/api/Admin/Status";
 export const GET_ADMIN_LIST = "/api/Admin/List";
+export const GET_ADMIN_ROLES = "/api/AdminGroup/List";
+export const CREATE_ADMIN_ROLES = "/api/Admin/Create/Roles";
 
 // Common
 export const GET_MENU = "/api/Common/GetMenu";

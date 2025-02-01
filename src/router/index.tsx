@@ -4,6 +4,7 @@ import MainLayout from "@src/layouts/Main";
 import PageLoading from "@src/layouts/PageLoading";
 import RecipesLayout from "@src/layouts/RecipesLayout";
 import WeblogsLayout from "@src/layouts/WeblogsLayout";
+import AdminCreatePage from "@src/pages/Admins/create";
 import AdminListPage from "@src/pages/Admins/list";
 import DashboardPage from "@src/pages/Dashboard";
 import ForbiddenPage from "@src/pages/ForbiddenPage";
@@ -16,6 +17,7 @@ import UnAuthorizedPage from "@src/pages/UnAuthorizedPage";
 import WeblogListPage from "@src/pages/Weblog/list";
 import ProtectRoutes from "@src/router/protect-routes";
 import { getAdminList } from "@src/services/getAdminList";
+import { getAdminRoles } from "@src/services/getAdminRoles";
 import { getInitData } from "@src/services/getinitData";
 import { getRecipesStatuses } from "@src/services/getRecipesStatuses";
 import { getWeblogsRequirements } from "@src/services/getWeblogsRequirements";
@@ -33,9 +35,10 @@ const router = createBrowserRouter([
         shouldRevalidate: () => false,
         children: [
           { index: true, element: <Navigate to="/dashboard" /> },
-          { path: "/dashboard", element: <DashboardPage /> },
+          { path: "dashboard", element: <DashboardPage /> },
+          // Recipe
           {
-            path: "/recipes",
+            path: "recipes",
             element: <RecipesLayout />,
             loader: getRecipesStatuses,
             shouldRevalidate: () => false,
@@ -50,8 +53,10 @@ const router = createBrowserRouter([
               },
             ],
           },
+
+          // Weblog
           {
-            path: "/weblogs",
+            path: "weblogs",
             element: <WeblogsLayout />,
             loader: getWeblogsRequirements,
             shouldRevalidate: () => false,
@@ -68,9 +73,13 @@ const router = createBrowserRouter([
               },
             ],
           },
-          { path: "/qa", element: <QAPage /> },
+
+          // QA
+          { path: "qa", element: <QAPage /> },
+
+          // Admin Management
           {
-            path: "/admin-management",
+            path: "admin-management",
             element: <AdminsLayout />,
             shouldRevalidate: () => false,
             children: [
@@ -85,15 +94,22 @@ const router = createBrowserRouter([
               },
             ],
           },
-          { path: "/role-management", element: <RoleManagementPage /> },
+          {
+            path: "admin-management/create",
+            element: <AdminCreatePage />,
+            loader: getAdminRoles,
+          },
+
+          // Role Management
+          { path: "role-management", element: <RoleManagementPage /> },
         ],
       },
     ],
   },
-  { path: "/401", element: <UnAuthorizedPage /> },
-  { path: "/403", element: <ForbiddenPage /> },
-  { path: "/login", element: <LoginPage /> },
-  { path: "*", element: <NotFoundPage /> },
+  { path: "401", element: <UnAuthorizedPage /> },
+  { path: "403", element: <ForbiddenPage /> },
+  { path: "login", element: <LoginPage /> },
+  { path: "", element: <NotFoundPage /> },
 ]);
 
 export default router;
