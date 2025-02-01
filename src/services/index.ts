@@ -84,4 +84,23 @@ const POST = async <T>(
   );
 };
 
-export { GET, POST };
+const PUT = async <T>(
+  url: string,
+  body?: any,
+  controller?: AbortController
+): Promise<T> => {
+  return fetchWithAbort(
+    url,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(body),
+    },
+    controller
+  );
+};
+
+export { GET, POST, PUT };

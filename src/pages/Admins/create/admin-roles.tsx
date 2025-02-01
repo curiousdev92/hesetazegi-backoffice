@@ -17,8 +17,8 @@ const AdminRolesForm: FC<PropTypes> = (props) => {
   };
 
   return (
-    <div className="basis-[58%] rounded-xl border border-border-secondary grid">
-      <header className="w-full h-12 py-3 px-4 bg-content-tertiary rounded-t-xl flex items-center gap-2">
+    <div className="basis-[58%] rounded-xl border border-border-secondary grid overflow-hidden">
+      <header className="w-full h-12 py-3 px-4 bg-content-tertiary flex items-center gap-2">
         <p className="text-label-lg text-label-primary text-right grow">
           نقش‌های مدیر
         </p>

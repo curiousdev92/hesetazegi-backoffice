@@ -22,12 +22,14 @@ const AdminsLayout: FC<PropTypes> = () => {
         limit={weblogsPageLimit}
         searchbarPlaceholder="جستجو مدیران..."
         actionButton={
-          <Button
-            size={"l"}
-            variant={"filled"}
-            label={<Link to={"/admin-management/create"}>ایجاد مدیر جدید</Link>}
-            startIcon={<FontIcon icon="add" />}
-          />
+          <Link to={"/admin-management/create"}>
+            <Button
+              size={"l"}
+              variant={"filled"}
+              label={"ایجاد مدیر جدید"}
+              startIcon={<FontIcon icon="add" />}
+            />
+          </Link>
         }
       >
         <Outlet />

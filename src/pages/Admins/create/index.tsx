@@ -10,10 +10,26 @@ import AdminRolesForm from "./admin-roles";
 
 type PropTypes = {};
 
+type ErrorsType = {
+  firstName: boolean;
+  lastName: boolean;
+  position: boolean;
+  username: boolean;
+  password: boolean;
+};
+
 const AdminCreatePage: FC<PropTypes> = (props) => {
   const {} = props;
   const data = useLoaderData();
+  const initErrors = {
+    firstName: false,
+    lastName: false,
+    position: false,
+    username: false,
+    password: false,
+  };
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<ErrorsType>(initErrors);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -21,8 +37,19 @@ const AdminCreatePage: FC<PropTypes> = (props) => {
     const formData = Object.fromEntries(form);
     const selectedRoles = form.getAll("roles");
     const allSelected = form.get("all-roles");
+    const formEntries = Object.entries(formData);
+    const newErrors: any = {};
 
-    if (!selectedRoles?.length && !allSelected) {
+    formEntries.forEach(([key, value]) => {
+      if (key !== "all-roles" && key !== "roles") {
+        newErrors[key] = !value;
+      }
+    });
+    const hasError = Object.values(newErrors).some((e) => e);
+    console.log(newErrors);
+    setErrors(newErrors);
+
+    if ((!selectedRoles?.length && !allSelected) || hasError) {
       console.log("form not completed");
       return;
     } else {
@@ -68,7 +95,7 @@ const AdminCreatePage: FC<PropTypes> = (props) => {
         />
       </header>
       <section className="flex gap-6 p-4 grow overflow-hidden">
-        <AdminDetailsForm />
+        <AdminDetailsForm errors={errors} />
         <AdminRolesForm roles={data} />
       </section>
     </form>

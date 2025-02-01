@@ -7,10 +7,18 @@ import { uuid } from "@src/utils/helpers";
 import { BASE_URL_UPLOAD } from "@src/utils/urls";
 import { ChangeEventHandler, FC, useState } from "react";
 
-type PropTypes = {};
+type PropTypes = {
+  errors: {
+    firstName: boolean;
+    lastName: boolean;
+    position: boolean;
+    username: boolean;
+    password: boolean;
+  };
+};
 
 const AdminDetailsForm: FC<PropTypes> = (props) => {
-  const {} = props;
+  const { errors } = props;
   const [avatar, setAvatar] = useState("");
   const [loading, setLoading] = useState(false);
   const user = useStore((st) => st.adminStatus);
@@ -44,8 +52,8 @@ const AdminDetailsForm: FC<PropTypes> = (props) => {
   };
 
   return (
-    <div className="basis-[42%] rounded-xl border border-border-secondary">
-      <div className="w-full h-12 py-3 px-4 bg-content-tertiary rounded-t-xl">
+    <div className="basis-[42%] rounded-xl border border-border-secondary overflow-hidden">
+      <div className="w-full h-12 py-3 px-4 bg-content-tertiary">
         <p className="text-label-lg text-label-primary text-right">
           مشخصات فردی
         </p>
@@ -75,6 +83,7 @@ const AdminDetailsForm: FC<PropTypes> = (props) => {
           size={"medium"}
           label={"نام"}
           placeholder={"نام مدیر را وارد کنید"}
+          state={errors.firstName ? "error" : "default"}
         />
         <TextField
           id={"lastName"}
@@ -82,6 +91,7 @@ const AdminDetailsForm: FC<PropTypes> = (props) => {
           size={"medium"}
           label={"نام خانوادگی"}
           placeholder={"نام خانوادگی مدیر را وارد کنید"}
+          state={errors.lastName ? "error" : "default"}
         />
         <TextField
           id={"position"}
@@ -89,6 +99,7 @@ const AdminDetailsForm: FC<PropTypes> = (props) => {
           size={"medium"}
           label={"سمت"}
           placeholder={"سمت شغلی مدیر را وارد کنید"}
+          state={errors.position ? "error" : "default"}
         />
         <TextField
           id={"username"}
@@ -96,13 +107,15 @@ const AdminDetailsForm: FC<PropTypes> = (props) => {
           size={"medium"}
           label={"نام کاربری"}
           placeholder={"نام کاربری را وارد کنید"}
+          state={errors.username ? "error" : "default"}
         />
         <TextField
           id={"password"}
+          name="password"
           size={"medium"}
           label={"رمز عبور"}
           placeholder={"رمز عبور را وارد کنید"}
-          name="password"
+          state={errors.password ? "error" : "default"}
         />
       </div>
     </div>

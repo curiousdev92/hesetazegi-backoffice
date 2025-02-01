@@ -6,6 +6,8 @@ export const GET_ADMIN_STATUS = "/api/Admin/Status";
 export const GET_ADMIN_LIST = "/api/Admin/List";
 export const GET_ADMIN_ROLES = "/api/AdminGroup/List";
 export const CREATE_ADMIN_ROLES = "/api/Admin/Create/Roles";
+export const CHANGE_ADMIN_STATUS = "/api/Admin/ChangeStatus";
+export const CHANGE_ADMIN_PASSWORD = "/api/Admin/ResetPassword";
 
 // Common
 export const GET_MENU = "/api/Common/GetMenu";

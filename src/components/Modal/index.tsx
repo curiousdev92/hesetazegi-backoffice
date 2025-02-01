@@ -1,18 +1,33 @@
 import withBackdrop from "@src/hoc/Backdrop";
 import { motion } from "motion/react";
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import Button from "../Button";
+import FontIcon from "../FontIcon";
 
 type PropTypes = {
   align?: "start" | "center" | "end";
   label?: string;
   supportingText?: string;
+  actions?: boolean;
   onSubmit?: () => void;
   onCancel?: () => void;
+  onClose?: () => void;
+  content?: ReactNode;
+  icon?: ReactNode;
 };
 
 const Modal: FC<PropTypes> = (props) => {
-  const { align = "center", label, supportingText, onSubmit, onCancel } = props;
+  const {
+    align = "center",
+    label,
+    supportingText,
+    actions = true,
+    onSubmit,
+    onCancel,
+    content,
+    icon,
+    onClose,
+  } = props;
 
   return (
     <motion.div
@@ -35,29 +50,60 @@ const Modal: FC<PropTypes> = (props) => {
       }}
       transition={{ duration: 0.5 }}
     >
-      <div className="p-4 flex flex-col gap-4 bg-content-primary shadow-modal min-w-80 z-50 ring-1 ring-border-secondary rounded-3xl">
-        <header className="flex flex-col gap-2" style={{ alignItems: align }}>
-          <p className="text-label-lg text-label-primary">{label}</p>
-          <p className="text-body-md text-label-secondary">{supportingText}</p>
+      <div className="p-4 flex flex-col gap-4 bg-content-primary shadow-modal min-w-80 z-50 ring-1 ring-border-secondary rounded-3xl max-w-96">
+        <header
+          className="flex flex-col gap-2 relative"
+          style={{ alignItems: align }}
+        >
+          {/* Close button */}
+          <button
+            className="h-6 w-6 ring-1 ring-border-secondary rounded-full p-1 absolute top-0"
+            style={{ left: align === "start" ? undefined : 0 }}
+            onClick={onClose}
+          >
+            <FontIcon icon="close" />
+          </button>
+
+          {icon ? icon : null}
+          <p
+            className="text-label-lg text-label-primary"
+            style={{ textAlign: align }}
+          >
+            {label}
+          </p>
+          <p
+            className="text-body-md text-label-secondary"
+            style={{ textAlign: align }}
+          >
+            {supportingText}
+          </p>
         </header>
 
         {/* Content */}
-        <div></div>
+        <div>{content}</div>
 
-        <footer className="w-full flex gap-2">
-          <Button
-            size={"l"}
-            variant={"filled"}
-            label="ثبت"
-            onClick={onSubmit}
-          />
-          <Button
-            size={"l"}
-            variant={"outline"}
-            label="لغو"
-            onClick={onCancel}
-          />
-        </footer>
+        {actions ? (
+          <footer className="w-full flex gap-2">
+            {onSubmit ? (
+              <Button
+                size={"l"}
+                variant={"filled"}
+                label="ثبت"
+                onClick={onSubmit}
+                fullWidth
+              />
+            ) : null}
+            {onCancel ? (
+              <Button
+                size={"l"}
+                variant={"outline"}
+                label="لغو"
+                onClick={onCancel}
+                fullWidth
+              />
+            ) : null}
+          </footer>
+        ) : null}
       </div>
     </motion.div>
   );

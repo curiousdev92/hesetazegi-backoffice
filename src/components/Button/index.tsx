@@ -3,7 +3,7 @@ import Spinner from "../Spinner";
 
 interface PropType {
   size: "s" | "m" | "l" | "xl";
-  variant: "filled" | "tonal" | "outline" | "dashed" | "texted";
+  variant: "filled" | "tonal" | "outline" | "dashed" | "texted" | "danger";
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   label?: ReactNode;
   type?: "button" | "submit" | "reset";
@@ -21,26 +21,28 @@ interface PropType {
   fullWidth?: boolean;
 }
 
-export default function Button({
-  size = "m",
-  variant = "filled",
-  onClick,
-  startIcon,
-  endIcon,
-  icon,
-  label,
-  children,
-  className,
-  disabled = false,
-  gradient = false,
-  type = "button",
-  animated,
-  loading,
-  id,
-  error,
-  fullWidth,
-  ...rest
-}: PropType) {
+export default function Button(props: PropType) {
+  const {
+    size = "m",
+    variant = "filled",
+    onClick,
+    startIcon,
+    endIcon,
+    icon,
+    label,
+    children,
+    className,
+    disabled = false,
+    gradient = false,
+    type = "button",
+    animated,
+    loading,
+    id,
+    error,
+    fullWidth,
+    ...rest
+  } = props;
+
   const sizeClasses = {
     s: `h-6 rounded text-body-sm gap-0.5 ${
       startIcon
@@ -110,6 +112,14 @@ export default function Button({
     } ${
       gradient ? "bg-clip-text text-transparent bg-systemGradient-to-r1" : ""
     }`,
+
+    danger: `bg-transparent text-system-danger border ${
+      error
+        ? "border-system-danger"
+        : gradient
+        ? "border-gradient"
+        : "border-border-secondary"
+    } ${!disabled ? "hover:bg-gray-50" : ""}`,
   };
 
   const HandelClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -122,7 +132,7 @@ export default function Button({
       onClick={HandelClick}
       type={type}
       {...rest}
-      className={`flex items-center justify-between relative overflow-hidden
+      className={`flex items-center justify-center relative overflow-hidden
       ${sizeClasses[size]} ${variantClasses[variant]} ${className}
        ${
          disabled || loading ? "opacity-30 cursor-default" : "cursor-pointer"

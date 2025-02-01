@@ -7,6 +7,7 @@ import Avatar from "@src/components/Avatar";
 import IconButton from "@src/components/IconButton";
 import SVGElement from "@src/components/SVG";
 import { useStore } from "@src/store";
+import { motion } from "motion/react";
 import { FC, MouseEventHandler, ReactNode, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 
@@ -22,9 +23,6 @@ const SideMenu: FC<PropTypes> = (props) => {
   const inPath = (route: string) => pathname.includes(route);
   const currentIdx = menu.findIndex((m) => inPath(m.route));
   const fullName = `${status?.firstname} ${status?.lastname}`;
-  const animateClass = show
-    ? "grid-cols-[3.5rem_200px]"
-    : "grid-cols-[3.5rem_0px]";
 
   const icons: { [key: string]: ReactNode } = {
     dashboard: <DashboardIcon />,
@@ -48,8 +46,9 @@ const SideMenu: FC<PropTypes> = (props) => {
   };
 
   return (
-    <aside
-      className={`grid grid-flow-row grid-rows-[5rem_1fr_76px] overflow-hidden transition-[grid-template-columns] duration-300 text-label-baseWhite bg-primary-800 ${animateClass}`}
+    <motion.aside
+      animate={{ width: show ? 256 : 56 }}
+      className={`grid grid-flow-row grid-rows-[5rem_1fr_76px] overflow-hidden text-label-baseWhite bg-primary-800 grid-cols-[3.5rem_200px]`}
     >
       {/* Top gradient */}
       <div className="col-start-1 col-end-3 row-start-1 bg-gradient-to-l from-[#99A41B] to-system-primary border-b border-border-quaternary"></div>
@@ -105,7 +104,7 @@ const SideMenu: FC<PropTypes> = (props) => {
 
       {/* Footer */}
       <footer
-        className="row-start-3 col-start-1 col-end-3 border-t border-[#FFFFFF33] border-opacity-20 grid grid-cols-[40px_minmax(20px,1fr)_40px] items-center gap-3 min-w-fit transition-[padding] duration-500"
+        className="row-start-3 col-start-1 col-end-3 border-t border-[#FFFFFF33] border-opacity-20 grid grid-cols-[40px_minmax(20px,1fr)_40px] items-center gap-3 min-w-fit transition-[padding] duration-300"
         style={{ padding: show ? 16 : "1rem .5rem" }}
       >
         <Avatar img={status?.avatar} size={40} />
@@ -127,7 +126,7 @@ const SideMenu: FC<PropTypes> = (props) => {
           clickHandler={logOut}
         />
       </footer>
-    </aside>
+    </motion.aside>
   );
 };
 export default SideMenu;
