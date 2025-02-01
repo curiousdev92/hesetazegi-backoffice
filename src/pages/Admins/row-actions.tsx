@@ -8,12 +8,14 @@ import TextField from "@src/components/Textfield";
 import { PUT } from "@src/services";
 import { CHANGE_ADMIN_PASSWORD, CHANGE_ADMIN_STATUS } from "@src/utils/urls";
 import { FC, FormEventHandler, useState } from "react";
+import { Link, useNavigate } from "react-router";
 
 type PropTypes = { data: MappedAdminType };
 
 const AdminsRowActions: FC<PropTypes> = (props) => {
   const { data } = props;
   const initErrors = { password: false, confirmPassword: false };
+  const navigate = useNavigate();
   const [modal, setModal] = useState<"resetPass" | "disableUser" | "">("");
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState(initErrors);
@@ -51,7 +53,7 @@ const AdminsRowActions: FC<PropTypes> = (props) => {
       const response = await PUT(`${CHANGE_ADMIN_STATUS}/${data.adminId}`);
       if (response === true) {
         closeModal();
-        window.history.replaceState(null, "", "/admin-management");
+        navigate("/admin-management", { flushSync: true });
       }
     } catch (error) {
       console.log(error);
@@ -144,10 +146,12 @@ const AdminsRowActions: FC<PropTypes> = (props) => {
       <td
         className={`absolute left-4 top-px bottom-px flex gap-2 items-center opacity-0 group-hover:opacity-100 bg-gray-50`}
       >
-        <IconButton
-          icon="edit"
-          className="p-1.5 bg-system-white rounded-lg border border-border-secondary text-xl text-label-primary hover:text-label-basePrimary"
-        />
+        <Link to={`/admin-management/${data.adminId}`}>
+          <IconButton
+            icon="edit"
+            className="p-1.5 bg-system-white rounded-lg border border-border-secondary text-xl text-label-primary hover:text-label-basePrimary"
+          />
+        </Link>
         <IconButton
           icon="reset-password"
           className="p-1.5 bg-system-white rounded-lg border border-border-secondary text-xl text-label-primary hover:text-system-blue"

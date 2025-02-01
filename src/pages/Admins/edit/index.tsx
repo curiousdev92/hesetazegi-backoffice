@@ -1,12 +1,12 @@
 import Button from "@src/components/Button";
 import FontIcon from "@src/components/FontIcon";
 import IconButton from "@src/components/IconButton";
-import { POST } from "@src/services";
-import { CREATE_ADMIN_ROLES } from "@src/utils/urls";
+import { PUT } from "@src/services";
+import { CHANGE_ADMIN_ROLES } from "@src/utils/urls";
 import { FC, FormEventHandler, useState } from "react";
 import { Link, useLoaderData, useNavigate } from "react-router";
-import AdminDetailsForm from "./admin-details";
-import AdminRolesForm from "./admin-roles";
+import AdminDetailsForm from "../create/admin-details";
+import AdminRolesForm from "../create/admin-roles";
 
 type PropTypes = {};
 
@@ -18,10 +18,11 @@ type ErrorsType = {
   password: boolean;
 };
 
-const AdminCreatePage: FC<PropTypes> = (props) => {
+const AdminEditPage: FC<PropTypes> = (props) => {
   const {} = props;
-  const data = useLoaderData();
+  const { roles, data } = useLoaderData();
   const navigate = useNavigate();
+
   const initErrors = {
     firstName: false,
     lastName: false,
@@ -54,16 +55,15 @@ const AdminCreatePage: FC<PropTypes> = (props) => {
     } else {
       setLoading(true);
       try {
-        const dt = await POST(CREATE_ADMIN_ROLES, {
+        const dt = await PUT(CHANGE_ADMIN_ROLES, {
+          adminId: data.adminId,
           ...formData,
           roles: selectedRoles?.length
             ? selectedRoles
-            : data.flatMap((i: any) => i.adminGroupId),
-          image:
-            "https://statics.hesetazegi.com/files/avatar/admins/367d54bd-e639-420f-8850-e27c0b2eca14/Leo's Fortune Character.jpg",
+            : roles.flatMap((i: any) => i.adminGroupId),
         });
         if (dt === true) {
-          navigate("/admin-management");
+          navigate("/admin-management", { flushSync: true });
         }
       } catch (error) {
         console.log(error);
@@ -83,7 +83,7 @@ const AdminCreatePage: FC<PropTypes> = (props) => {
           <Link to={"/admin-management"}>
             <IconButton icon="arrow-right" iconClasses="text-xl" />
           </Link>
-          <h1 className="text-label-primary text-title-md">ایجاد مدیر جدید</h1>
+          <h1 className="text-label-primary text-title-md">ویرایش مدیر</h1>
         </div>
 
         <Button
@@ -91,16 +91,16 @@ const AdminCreatePage: FC<PropTypes> = (props) => {
           variant={"filled"}
           startIcon={<FontIcon icon={"tick"} />}
           type="submit"
-          label={"ثبت و ذخیره"}
+          label={"ثبت و ویرایش"}
           loading={loading}
         />
       </header>
       <section className="flex gap-6 p-4 grow overflow-hidden">
-        <AdminDetailsForm errors={errors} />
-        <AdminRolesForm roles={data} />
+        <AdminDetailsForm errors={errors} data={data} />
+        <AdminRolesForm roles={roles} data={data} />
       </section>
     </form>
   );
 };
 
-export default AdminCreatePage;
+export default AdminEditPage;

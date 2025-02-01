@@ -2,7 +2,6 @@ import DefaultAvatar from "@images/default-avatar.svg";
 import Img from "@src/components/Img";
 import Spinner from "@src/components/Spinner";
 import TextField from "@src/components/Textfield";
-import { useStore } from "@src/store";
 import { uuid } from "@src/utils/helpers";
 import { BASE_URL_UPLOAD } from "@src/utils/urls";
 import { ChangeEventHandler, FC, useState } from "react";
@@ -15,16 +14,26 @@ type PropTypes = {
     username: boolean;
     password: boolean;
   };
+  data?: {
+    adminId: string;
+    email: string;
+    firstName: string;
+    image: string;
+    lastName: string;
+    phone: string;
+    position: string;
+    roles: { key: number; value: string }[];
+    username: string;
+  };
 };
 
 const AdminDetailsForm: FC<PropTypes> = (props) => {
-  const { errors } = props;
-  const [avatar, setAvatar] = useState("");
+  const { errors, data } = props;
+  const [avatar, setAvatar] = useState(data?.image || "");
   const [loading, setLoading] = useState(false);
-  const user = useStore((st) => st.adminStatus);
 
   const handleAvatarChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    if (e.target?.files?.[0] && user) {
+    if (e.target?.files?.[0]) {
       const file = e.target.files[0];
       const reader = new FileReader();
       reader.onload = async () => {
@@ -32,15 +41,15 @@ const AdminDetailsForm: FC<PropTypes> = (props) => {
         try {
           const uploadData = new FormData();
           uploadData.append("file", file);
-          uploadData.append("category", "admins");
           uploadData.append("type", "avatar");
-          uploadData.append("key", uuid());
+          uploadData.append("category", "admins");
+          uploadData.append("key", data?.adminId || uuid());
           const res = await fetch(BASE_URL_UPLOAD, {
             method: "POST",
             body: uploadData,
           });
-          const data = await res.json();
-          setAvatar(data.data);
+          const dt = await res.json();
+          setAvatar(dt.data);
         } catch (error) {
           console.log(error);
         } finally {
@@ -84,6 +93,7 @@ const AdminDetailsForm: FC<PropTypes> = (props) => {
           label={"نام"}
           placeholder={"نام مدیر را وارد کنید"}
           state={errors.firstName ? "error" : "default"}
+          defaultValue={data?.firstName}
         />
         <TextField
           id={"lastName"}
@@ -92,6 +102,7 @@ const AdminDetailsForm: FC<PropTypes> = (props) => {
           label={"نام خانوادگی"}
           placeholder={"نام خانوادگی مدیر را وارد کنید"}
           state={errors.lastName ? "error" : "default"}
+          defaultValue={data?.lastName}
         />
         <TextField
           id={"position"}
@@ -100,6 +111,7 @@ const AdminDetailsForm: FC<PropTypes> = (props) => {
           label={"سمت"}
           placeholder={"سمت شغلی مدیر را وارد کنید"}
           state={errors.position ? "error" : "default"}
+          defaultValue={data?.position}
         />
         <TextField
           id={"username"}
@@ -108,6 +120,7 @@ const AdminDetailsForm: FC<PropTypes> = (props) => {
           label={"نام کاربری"}
           placeholder={"نام کاربری را وارد کنید"}
           state={errors.username ? "error" : "default"}
+          defaultValue={data?.username}
         />
         <TextField
           id={"password"}
@@ -116,6 +129,9 @@ const AdminDetailsForm: FC<PropTypes> = (props) => {
           label={"رمز عبور"}
           placeholder={"رمز عبور را وارد کنید"}
           state={errors.password ? "error" : "default"}
+          defaultValue={"******"}
+          disabled
+          type="password"
         />
       </div>
     </div>

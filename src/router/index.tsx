@@ -5,6 +5,7 @@ import PageLoading from "@src/layouts/PageLoading";
 import RecipesLayout from "@src/layouts/RecipesLayout";
 import WeblogsLayout from "@src/layouts/WeblogsLayout";
 import AdminCreatePage from "@src/pages/Admins/create";
+import AdminEditPage from "@src/pages/Admins/edit";
 import AdminListPage from "@src/pages/Admins/list";
 import DashboardPage from "@src/pages/Dashboard";
 import ForbiddenPage from "@src/pages/ForbiddenPage";
@@ -16,6 +17,7 @@ import RoleManagementPage from "@src/pages/RoleManagement";
 import UnAuthorizedPage from "@src/pages/UnAuthorizedPage";
 import WeblogListPage from "@src/pages/Weblog/list";
 import ProtectRoutes from "@src/router/protect-routes";
+import { getAdminDetail } from "@src/services/getAdminDetail";
 import { getAdminList } from "@src/services/getAdminList";
 import { getAdminRoles } from "@src/services/getAdminRoles";
 import { getInitData } from "@src/services/getinitData";
@@ -81,7 +83,7 @@ const router = createBrowserRouter([
           {
             path: "admin-management",
             element: <AdminsLayout />,
-            shouldRevalidate: () => false,
+
             children: [
               {
                 index: true,
@@ -98,6 +100,16 @@ const router = createBrowserRouter([
             path: "admin-management/create",
             element: <AdminCreatePage />,
             loader: getAdminRoles,
+          },
+          {
+            path: "admin-management/:adminID",
+            element: <AdminEditPage />,
+            loader: async (req) => {
+              return {
+                roles: await getAdminRoles(),
+                data: await getAdminDetail(req.params.adminID as string),
+              };
+            },
           },
 
           // Role Management

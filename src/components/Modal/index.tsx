@@ -48,7 +48,7 @@ const Modal: FC<PropTypes> = (props) => {
         transform:
           "perspective(500px) translateZ(-100px) rotateX(5deg) rotateY(25deg)",
       }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <div className="p-4 flex flex-col gap-4 bg-content-primary shadow-modal min-w-80 z-50 ring-1 ring-border-secondary rounded-3xl max-w-96">
         <header

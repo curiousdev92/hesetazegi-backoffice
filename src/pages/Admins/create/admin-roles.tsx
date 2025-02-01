@@ -4,10 +4,23 @@ import Img from "@src/components/Img";
 import Switch from "@src/components/Switch";
 import { ChangeEventHandler, FC, Fragment, useState } from "react";
 
-type PropTypes = { roles: roleItemType[] };
+type PropTypes = {
+  roles: roleItemType[];
+  data?: {
+    adminId: string;
+    email: string;
+    firstName: string;
+    image: string;
+    lastName: string;
+    phone: string;
+    position: string;
+    roles: { key: number; value: string }[];
+    username: string;
+  };
+};
 
 const AdminRolesForm: FC<PropTypes> = (props) => {
-  const { roles } = props;
+  const { roles, data } = props;
   const rolesLength = roles?.length || 0;
   const [allChecked, setAllChecked] = useState(false);
 
@@ -15,6 +28,9 @@ const AdminRolesForm: FC<PropTypes> = (props) => {
     const { checked } = e.target;
     setAllChecked(checked);
   };
+
+  console.log(roles);
+  console.log(data?.roles.flatMap((t) => t.key));
 
   return (
     <div className="basis-[58%] rounded-xl border border-border-secondary grid overflow-hidden">
@@ -62,6 +78,9 @@ const AdminRolesForm: FC<PropTypes> = (props) => {
                 name={"roles"}
                 value={role.adminGroupId}
                 disabled={allChecked}
+                defaultChecked={data?.roles
+                  .flatMap((t) => t.key)
+                  .includes(role.adminGroupId)}
               />
             </label>
             {i !== rolesLength ? (

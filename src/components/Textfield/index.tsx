@@ -19,6 +19,8 @@ interface TextFieldProps {
   readOnly?: AttrType["readOnly"];
   id?: AttrType["id"];
   name?: AttrType["name"];
+  defaultValue?: AttrType["defaultValue"];
+  type?: AttrType["type"];
 }
 
 export const TextField: FC<TextFieldProps> = (props) => {
@@ -39,6 +41,8 @@ export const TextField: FC<TextFieldProps> = (props) => {
     readOnly,
     id,
     name,
+    defaultValue,
+    type = "text",
   } = props;
 
   const sizeClasses = {
@@ -83,7 +87,7 @@ export const TextField: FC<TextFieldProps> = (props) => {
         {/* Input */}
         <input
           id={id}
-          type="text"
+          type={type}
           value={value}
           onChange={onChange}
           placeholder={placeholder}
@@ -95,6 +99,7 @@ export const TextField: FC<TextFieldProps> = (props) => {
           aria-describedby={supportingText ? `${id}-description` : undefined}
           readOnly={readOnly}
           name={name}
+          defaultValue={defaultValue}
         />
         {/* Content/Avatar/End Icon */}
         <div className="flex items-center gap-2">
