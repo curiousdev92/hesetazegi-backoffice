@@ -3,6 +3,7 @@ import Img from "@src/components/Img";
 import { useStore } from "@src/store";
 import { FC } from "react";
 import { useLoaderData } from "react-router";
+import AdminsRowActions from "./row-actions";
 
 type PropTypes = {};
 
@@ -12,7 +13,7 @@ const AdminListPage: FC<PropTypes> = (props) => {
   const data = useLoaderData() as adminsEntityType;
   const { count, result } = data;
   setTotal(count);
-  const tableBodies = result.map((dt) => ({
+  const tableBodies: MappedAdminType[] = result.map((dt) => ({
     avatar: dt.avatar,
     fullName: dt.fullName,
     adminName: dt.adminName,
@@ -24,6 +25,7 @@ const AdminListPage: FC<PropTypes> = (props) => {
       year: "2-digit",
       month: "2-digit",
     }),
+    adminId: dt.adminId,
   }));
 
   const tableHeaders = [
@@ -37,72 +39,91 @@ const AdminListPage: FC<PropTypes> = (props) => {
   ];
 
   return (
-    <div className="grid grid-rows-[3rem] grid-cols-[3.5rem_repeat(6,minmax(0,auto))] auto-rows-[3.5rem] items-center">
+    <div className="">
       {/* Table Header */}
-      {tableHeaders.map(({ key, label }) => (
-        <div
-          className={`${
-            key === "creationDate" ? "text-end" : ""
-          } text-label-primary text-label-md py-3.5 bg-content-tertiary px-4 first:text-center`}
-          key={key}
-        >
-          {label}
-        </div>
-      ))}
+      <table className="w-full">
+        <thead>
+          <tr>
+            {tableHeaders.map(({ key, label }) => (
+              <th
+                className={`${
+                  key === "creationDate"
+                    ? "text-end"
+                    : key === "avatar"
+                    ? "text-center"
+                    : "text-start"
+                } text-label-primary text-label-md py-3.5 bg-content-tertiary px-4`}
+                key={key}
+              >
+                {label}
+              </th>
+            ))}
+          </tr>
+        </thead>
 
-      {tableBodies.map((obj) => {
-        const keys = Object.keys(obj) as (keyof typeof obj)[];
-        return keys.map((key) => (
-          <div
-            className={`py-2 px-4 ${key === "creationDate" ? "text-end" : ""}`}
-            key={key}
-            // key === "avatar" ? "ps-4" :
-          >
-            {key === "avatar" ? (
-              <Img
-                src={obj["avatar"]}
-                size={40}
-                ratio={[1, 1]}
-                className="rounded-full"
-              />
-            ) : key === "isActive" ? (
-              <div className="w-[70px]">
-                <Chips
-                  size={"m"}
-                  label={obj.isActive ? "فعال" : "غیرفعال"}
-                  variant={obj.isActive ? "primary" : "secondary"}
-                  fullWidth
+        <tbody>
+          {tableBodies.map((obj) => (
+            <tr
+              className="hover:bg-gray-50 cursor-pointer relative group"
+              key={obj.adminId}
+            >
+              <td className="py-2 px-4 flex justify-center">
+                <Img
+                  src={obj.avatar}
+                  size={40}
+                  ratio={[1, 1]}
+                  className="rounded-full"
                 />
-              </div>
-            ) : key === "roles" ? (
-              obj.roles.length ? (
-                <div className="flex gap-2">
+              </td>
+              <td className="py-2 px-4 border-b border-b-border-secondary">
+                {obj.fullName}{" "}
+              </td>
+              <td className="py-2 px-4 border-b border-b-border-secondary">
+                {obj.adminName}
+              </td>
+              <td className="py-2 px-4 border-b border-b-border-secondary">
+                {obj.position}
+              </td>
+              <td className="py-2 px-4 border-b border-b-border-secondary">
+                <div className="w-[70px]">
                   <Chips
                     size={"m"}
-                    label={`# ${obj.roles[0].value}`}
-                    variant={"gray"}
+                    label={obj.isActive ? "فعال" : "غیرفعال"}
+                    variant={obj.isActive ? "primary" : "secondary"}
+                    fullWidth
                   />
-                  {obj.roles.length > 1 ? (
+                </div>
+              </td>
+              <td className="py-2 px-4 border-b border-b-border-secondary">
+                {obj.roles.length ? (
+                  <div className="flex gap-2">
                     <Chips
                       size={"m"}
-                      label={`+${(obj.roles.length - 1).toLocaleString("fa")}`}
+                      label={`# ${obj.roles[0].value}`}
                       variant={"gray"}
                     />
-                  ) : null}
-                </div>
-              ) : null
-            ) : key === "creationDate" ? (
-              <span className="text-label-secondary text-body-lg">
-                {obj["creationDate"]}
-              </span>
-            ) : (
-              <span className="text-label-secondary text-body-md">
-                {obj[key]}
-              </span>
-            )}
-          </div>
-        ));
-      })}
+                    {obj.roles.length > 1 ? (
+                      <Chips
+                        size={"m"}
+                        label={`+${(obj.roles.length - 1).toLocaleString(
+                          "fa"
+                        )}`}
+                        variant={"gray"}
+                      />
+                    ) : null}
+                  </div>
+                ) : null}
+              </td>
+              <td className="py-2 px-4 border-b border-b-border-secondary text-end">
+                <span className="text-label-secondary text-body-lg">
+                  {obj["creationDate"]}
+                </span>
+              </td>
+              <AdminsRowActions data={obj} />
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

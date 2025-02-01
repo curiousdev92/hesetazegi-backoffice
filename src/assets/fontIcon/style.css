@@ -26,6 +26,12 @@
   min-width: fit-content;
 }
 
+.icon-deactive-user:before {
+  content: "\e954";
+}
+.icon-reset-password:before {
+  content: "\e955";
+}
 .icon-pin:before {
   content: "\e953";
 }

@@ -1,5 +1,6 @@
 import { preventClickBubble } from "@src/utils/helpers";
 import { ComponentType, FC } from "react";
+import ReactDOM from "react-dom";
 
 // Define the type for the added prop
 interface WithBackdropProps {
@@ -10,7 +11,7 @@ const withBackdrop = <P extends object>(
   WrappedComponent: ComponentType<P>
 ): FC<P & WithBackdropProps> => {
   return ({ onBackdropClick, ...props }: WithBackdropProps & P) => {
-    return (
+    return ReactDOM.createPortal(
       <div
         className="backdrop-blur-md bg-system-black bg-opacity-30 absolute left-0 top-0 size-full flex justify-center items-center z-10"
         onClick={onBackdropClick}
@@ -21,7 +22,8 @@ const withBackdrop = <P extends object>(
             onBackdropClick={onBackdropClick}
           />
         </div>
-      </div>
+      </div>,
+      document.body
     );
   };
 };

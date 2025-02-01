@@ -1,21 +1,24 @@
-import { ChangeEvent, FC, ReactNode } from "react";
+import { FC, InputHTMLAttributes, ReactNode } from "react";
 import FontIcon from "../FontIcon";
 
+type AttrType = InputHTMLAttributes<HTMLInputElement>;
 interface TextFieldProps {
   size?: "small" | "medium" | "large";
   state?: "default" | "error" | "success" | "disabled";
   label?: string;
-  placeholder?: string;
+  placeholder?: AttrType["placeholder"];
   supportingText?: string;
   startIcon?: string;
   avatar?: ReactNode;
   endIcon?: string;
   content?: ReactNode;
-  value?: string;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-  disabled?: boolean;
+  value?: AttrType["value"];
+  onChange?: AttrType["onChange"];
+  disabled?: AttrType["disabled"];
   center?: boolean;
-  readOnly?: boolean;
+  readOnly?: AttrType["readOnly"];
+  id?: AttrType["id"];
+  name?: AttrType["name"];
 }
 
 export const TextField: FC<TextFieldProps> = (props) => {
@@ -34,6 +37,8 @@ export const TextField: FC<TextFieldProps> = (props) => {
     disabled = false,
     center,
     readOnly,
+    id,
+    name,
   } = props;
 
   const sizeClasses = {
@@ -57,10 +62,7 @@ export const TextField: FC<TextFieldProps> = (props) => {
     <div className="flex flex-col w-full">
       {/* Label */}
       {label && (
-        <label
-          className="mb-2 text-label-primary"
-          htmlFor={label.replace(/\s+/g, "-").toLowerCase()}
-        >
+        <label className="mb-2 text-label-primary" htmlFor={id}>
           {label}
         </label>
       )}
@@ -80,7 +82,7 @@ export const TextField: FC<TextFieldProps> = (props) => {
 
         {/* Input */}
         <input
-          id={label?.replace(/\s+/g, "-").toLowerCase()}
+          id={id}
           type="text"
           value={value}
           onChange={onChange}
@@ -90,12 +92,9 @@ export const TextField: FC<TextFieldProps> = (props) => {
             center ? "text-center" : ""
           }`}
           aria-invalid={state === "error"}
-          aria-describedby={
-            supportingText
-              ? `${label?.replace(/\s+/g, "-").toLowerCase()}-description`
-              : undefined
-          }
+          aria-describedby={supportingText ? `${id}-description` : undefined}
           readOnly={readOnly}
+          name={name}
         />
         {/* Content/Avatar/End Icon */}
         <div className="flex items-center gap-2">
@@ -119,7 +118,7 @@ export const TextField: FC<TextFieldProps> = (props) => {
       {/* Supporting Text */}
       {supportingText && (
         <span
-          id={`${label?.replace(/\s+/g, "-").toLowerCase()}-description`}
+          id={`${id}-description`}
           className="mt-1 text-sm text-label-tertiary"
         >
           {supportingText}
