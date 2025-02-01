@@ -1,4 +1,4 @@
-import AdminManagementIcon from "@src/assets/images/admin-management.svg?react";
+import AdminManagementIcon from "@src/assets/images/adminPage/admin-management.svg?react";
 import DashboardIcon from "@src/assets/images/dashboard.svg?react";
 import QAIcon from "@src/assets/images/qa.svg?react";
 import RecipesIcon from "@src/assets/images/recipes.svg?react";
@@ -19,7 +19,8 @@ const SideMenu: FC<PropTypes> = (props) => {
   const [show, setShow] = useState(true);
   const menu = useStore((st) => st.menu);
   const status = useStore((st) => st.adminStatus);
-  const currentIdx = menu.findIndex((m) => m.route === pathname);
+  const inPath = (route: string) => pathname.includes(route);
+  const currentIdx = menu.findIndex((m) => inPath(m.route));
   const fullName = `${status?.firstname} ${status?.lastname}`;
   const animateClass = show
     ? "grid-cols-[3.5rem_200px]"
@@ -73,14 +74,12 @@ const SideMenu: FC<PropTypes> = (props) => {
               onClick={handleClick}
               id={item.route}
               className={`w-full py-3 px-4 flex gap-4 hover:bg-primary-700 ${
-                item.route === pathname
+                inPath(item.route)
                   ? "text-system-yellow bg-primary-700"
                   : "text-label-baseWhite"
               }`}
             >
-              <SVGElement
-                fillColor={item.route === pathname ? "#fff500" : "white"}
-              >
+              <SVGElement fillColor={inPath(item.route) ? "#fff500" : "white"}>
                 {icons[item.key]}
               </SVGElement>
               <span
