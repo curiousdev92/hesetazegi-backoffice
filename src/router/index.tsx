@@ -13,7 +13,8 @@ import LoginPage from "@src/pages/Login";
 import NotFoundPage from "@src/pages/NotFound";
 import QAPage from "@src/pages/QuestionAnswer";
 import RecipeListPage from "@src/pages/Recipe/list";
-import RoleManagementPage from "@src/pages/RoleManagement";
+import RoleCreatePage from "@src/pages/RoleManagement/create";
+import RoleManagementPage from "@src/pages/RoleManagement/list";
 import UnAuthorizedPage from "@src/pages/UnAuthorizedPage";
 import WeblogListPage from "@src/pages/Weblog/list";
 import ProtectRoutes from "@src/router/protect-routes";
@@ -21,6 +22,7 @@ import { getAdminDetail } from "@src/services/getAdminDetail";
 import { getAdminList } from "@src/services/getAdminList";
 import { getAdminRoles } from "@src/services/getAdminRoles";
 import { getInitData } from "@src/services/getinitData";
+import { getModulePermissions } from "@src/services/getModulePermissions";
 import { getRecipesStatuses } from "@src/services/getRecipesStatuses";
 import { getWeblogsRequirements } from "@src/services/getWeblogsRequirements";
 import { Suspense } from "react";
@@ -83,7 +85,6 @@ const router = createBrowserRouter([
           {
             path: "admin-management",
             element: <AdminsLayout />,
-
             children: [
               {
                 index: true,
@@ -111,9 +112,27 @@ const router = createBrowserRouter([
               };
             },
           },
+          // End Of Admin Management
 
           // Role Management
           { path: "role-management", element: <RoleManagementPage /> },
+          {
+            path: "role-management/create",
+            element: <RoleCreatePage />,
+            loader: getModulePermissions,
+          },
+          {
+            path: "role-management/:roleID",
+            element: <RoleEditPage />,
+            loader: async (req) => {
+              return {
+                roles: await getModulePermissions(),
+                data: await getAdminPermissionDetails(
+                  req.params.roleID as string
+                ),
+              };
+            },
+          },
         ],
       },
     ],

@@ -103,4 +103,23 @@ const PUT = async <T>(
   );
 };
 
-export { GET, POST, PUT };
+const DELETE = async <T>(
+  url: string,
+  body?: any,
+  controller?: AbortController
+): Promise<T> => {
+  return fetchWithAbort(
+    url,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(body),
+    },
+    controller
+  );
+};
+
+export { DELETE, GET, POST, PUT };

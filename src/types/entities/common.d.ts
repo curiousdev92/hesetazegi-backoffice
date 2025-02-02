@@ -15,3 +15,17 @@ interface PermissionItemType {
   title: string;
   actions: ActionsType[];
 }
+
+type ModulePermissionEntity = {
+  moduleId: number;
+  permissionKey: string;
+  permissionTitle: string;
+  permissions: {
+    action: string;
+    isActive: boolean;
+    moduleId: number;
+    moduleParentId: number;
+    permissionKey: string;
+    permissionTitle: string;
+  }[];
+};

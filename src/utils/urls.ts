@@ -4,16 +4,23 @@ export const BASE_URL_UPLOAD = "https://uploader.hesetazegi.com/";
 export const SIGNING = "/api/Admin/Signing";
 export const GET_ADMIN_STATUS = "/api/Admin/Status";
 export const GET_ADMIN_LIST = "/api/Admin/List";
-export const GET_ADMIN_ROLES = "/api/AdminGroup/List";
 export const CREATE_ADMIN_ROLES = "/api/Admin/Create/Roles";
 export const CHANGE_ADMIN_ROLES = "/api/Admin/Modify/Roles";
 export const CHANGE_ADMIN_STATUS = "/api/Admin/ChangeStatus";
 export const CHANGE_ADMIN_PASSWORD = "/api/Admin/ResetPassword";
 export const GET_ADMIN_DETAIL = "/api/Admin/Detail/Roles";
 
+// AdminGroup
+export const GET_ADMIN_ROLES = "/api/AdminGroup/List";
+export const CREATE_ADMIN_PERMISSIONS = "/api/AdminGroup/Create/Permissions";
+export const GET_ADMIN_PERMISSIONS = "/api/AdminGroup/List";
+export const DELETE_ADMIN_PERMISSIONS = "/api/AdminGroup/Permission/Remove";
+export const GET_ADMIN_PERMISSION = "/api/AdminGroup/Detail/Permission";
+
 // Common
 export const GET_MENU = "/api/Common/GetMenu";
 export const GET_PERMISSIONS = "/api/Common/GetPermissions";
+export const GET_MODULE_PERMISSIONS = "/api/Common/getModulePermissions";
 
 // FoodRecipe
 export const GET_RECIPE_LIST = "/api/FoodRecipe/List";

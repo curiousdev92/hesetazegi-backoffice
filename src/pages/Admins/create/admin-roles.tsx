@@ -29,9 +29,6 @@ const AdminRolesForm: FC<PropTypes> = (props) => {
     setAllChecked(checked);
   };
 
-  console.log(roles);
-  console.log(data?.roles.flatMap((t) => t.key));
-
   return (
     <div className="basis-[58%] rounded-xl border border-border-secondary grid overflow-hidden">
       <header className="w-full h-12 py-3 px-4 bg-content-tertiary flex items-center gap-2">

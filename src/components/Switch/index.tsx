@@ -36,7 +36,9 @@ const Switch: FC<PropTypes> = (props) => {
   return (
     <label
       htmlFor={id}
-      className={`relative cursor-pointer flex ${sizes[size]}`}
+      className={`relative ${disabled ? "" : "cursor-pointer"} flex ${
+        sizes[size]
+      }`}
     >
       <input
         type="checkbox"
